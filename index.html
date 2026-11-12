@@ -420,6 +420,8 @@ def('lunge','الطعنة','خطوة كبيرة للأمام وانزل بركب
   P(LH),P(Object.assign({lF:[80,-10],lB:[-20,-77]},LH)),P(LH),P(Object.assign({lF:[-20,-77],lB:[80,-10]},LH))]});
 def('pushup','الضغط','جسمك مستقيم كخط. انزل بصدرك نحو الأرض ثم ادفع للأعلى.',{anchor:'handF',ax:176,tempo:900,poses:[
   P({t:114.6,h:-28,aF:[2,2],aB:[0,0],lF:[-65.4,-65.4],lB:[-66,-66]}),P({t:104.5,h:-18,aF:[-50,56],aB:[-52,54],lF:[-75.5,-75.5],lB:[-76,-76]})]});
+def('wallpush','الضغط على الحائط','قف أمام الحائط بخطوة وضع كفّيك عليه بعرض كتفيك. جسمك مستقيم، اثنِ كوعيك وقرّب صدرك من الحائط ثم ادفع. هذه أول خطوة نحو الضغط الكامل.',{anchor:'ankles',ax:120,tempo:900,poses:[
+  P({t:160,h:-5,aF:[85,85],aB:[83,83],lF:[-20,-20],lB:[-21,-21]}),P({t:146,h:-5,aF:[50,100],aB:[48,98],lF:[-34,-34],lB:[-35,-35]})]});
 def('kneepushup','الضغط على الركبتين','ركبتاك على الأرض وجسمك مستقيم من الركبة للرأس. انزل ثم ادفع.',{anchor:'handF',ax:176,tempo:900,poses:[
   P({t:125.6,h:-28,aF:[2,2],aB:[0,0],lF:[-54.4,-110],lB:[-55,-111]}),P({t:110.4,h:-18,aF:[-50,56],aB:[-52,54],lF:[-69.6,-110],lB:[-70,-111]})]});
 def('plank','البلانك','ارتكز على ساعديك وأصابع قدميك. شدّ بطنك وابقِ جسمك خطاً مستقيماً.',{anchor:'handF',ax:170,tempo:1500,poses:[
@@ -511,7 +513,7 @@ def('wristescape','التحرر من إمساك المعصم','تخيّل أن �
 const SIT0=P({t:172,h:0,aF:[100,100],aB:[96,96],lF:[110,-70],lB:[112,-68]});
 def('fall','السقوط الآمن','على سجادة وببطء: اجلس والركبتان مثنيتان، اطوِ ذقنك نحو صدرك، تدحرج للخلف واضرب الأرض بذراعيك وكفّاك للأسفل ثم عد للجلوس. السقوط من وقوف يُتعلّم عند المدرب فقط.',{ax:140,tempo:900,warn:'تدرّب على سجادة وببطء. السقوط من وقوف يتعلّمه عند مدرب في النادي.',poses:[SIT0,P({t:265,h:-8,aF:[135,135],aB:[132,132],lF:[100,100],lB:[98,98]}),P({t:265,h:-8,aF:[92,92],aB:[90,90],lF:[100,100],lB:[98,98]})]});
 def('standup','النهوض الفني','من الجلوس: ضع يدك على الأرض خلفك، ارفع وركيك، اسحب ساقاً للخلف ثم قف في وضع الحماية وعيناك على الخصم. اللعبة هي أن تنهض بسرعة وأنت محمي.',{ax:140,tempo:900,warn:WARN_W,poses:[P({t:200,h:-10,aF:[-12,-12],aB:[-14,-14],lF:[110,-70],lB:[112,-68]}),P({t:250,h:-5,aF:[2,2],aB:[0,0],lF:[60,-64],lB:[62,-62]}),P(Object.assign({t:174,h:6,aF:[50,125],aB:[22,150]},STL))]});
-const SUB={pushup:'kneepushup',diamond:'kneepushup',widepush:'kneepushup',pike:'pushup',pushhold:'kneehold',pushlow:'kneehold',pullup:'negpull',negpull:'deadhang',chinhold:'deadhang',squatjump:'squat',mtn:'highknees',skater:'shuffle',lunge:'squat',superman:'glute',wallsit:'squat',deadbug:'plank',rope:'ropefake',kick:'balance',lowkick:'kick',knee:'balance',elbow:'strikes',palm:'strikes',strikes:'footwork',wristescape:'strikes',fall:'standup',standup:'glute',plank:'deadbug'};
+const SUB={pushup:'kneepushup',kneepushup:'wallpush',diamond:'kneepushup',widepush:'kneepushup',pike:'pushup',pushhold:'kneehold',pushlow:'kneehold',pullup:'negpull',negpull:'deadhang',chinhold:'deadhang',squatjump:'squat',mtn:'highknees',skater:'shuffle',lunge:'squat',superman:'glute',wallsit:'squat',deadbug:'plank',rope:'ropefake',kick:'balance',lowkick:'kick',knee:'balance',elbow:'strikes',palm:'strikes',strikes:'footwork',wristescape:'strikes',fall:'standup',standup:'glute',plank:'deadbug'};
 
 Object.keys(SUB).forEach(k=>{EX[k].sub=SUB[k]});
 
@@ -629,26 +631,27 @@ function buildSession(key,week,cf,tired){
   const steps=[],outline=[];
   const pick=(a,b)=>(lv==='i'?b:a)[wi];
   const tS=n=>tired?Math.max(1,n-1):n,tR=n=>tired?Math.max(3,Math.round(n*.7)):n,tT=n=>tired?Math.max(10,Math.round(n*.75/5)*5):n,tRest=n=>tired?n+10:n;
-  const KN={pushup:'kneepushup',diamond:'kneepushup',widepush:'kneepushup',pushhold:'kneehold',pushlow:'kneehold'};
-  const pickEx=id=>{let e=id;if(off[e])e=EX[e].sub||null;if(e&&(tired||(lv==='b'&&!(wi>=3&&e==='pushup')))&&KN[e])e=KN[e];return e};
+  const stage0=lv==='b'?(wi<2?0:1):(wi<2?1:2),stage=tired?Math.max(0,stage0-1):stage0;
+  const KN={pushup:['wallpush','kneepushup'],diamond:['wallpush','kneepushup'],widepush:['wallpush','kneepushup'],pushhold:['kneehold','kneehold'],pushlow:['kneehold','kneehold']};
+  const pickEx=id=>{let e=id;if(off[e])e=EX[e].sub||null;if(e&&KN[e]&&stage<2)e=KN[e][stage];return e};
   const W=(sec,id,o)=>{const ex=EX[id],how=((lv==='b'||tired)&&ex.easyHow)?ex.easyHow:ex.how;
     return Object.assign({kind:'work',sec:sec,ex:id,name:ex.n+(o.side?' — '+o.side:''),how:how},o)};
   const rest=(s,l)=>steps.push({kind:'rest',secs:tRest(s),label:l||''});
   const dropRest=()=>{if(steps.length&&steps[steps.length-1].kind==='rest')steps.pop()};
-  function warm(list){const it=[];list.forEach(id=>{const s=tT(lv==='b'?25:30);steps.push(W('warm',id,{mode:'time',secs:s,block:'تسخين'}));it.push({ex:id,txt:s+' ث'})});outline.push({label:'تسخين',items:it})}
+  function warm(list){const it=[];list.forEach(id=>{const s=tT(lv==='b'?25:30);steps.push(W('warm',id,{mode:'time',secs:s,block:'تسخين'}));it.push({ex:id,txt:s+' ثانية'})});outline.push({label:'تسخين',items:it})}
   function sets(label,items,n,rin,rout){const out=[];
-    items.forEach(it=>{const id=pickEx(it.ex);if(!id)return;const s=tS(n);
+    items.forEach(it=>{const id=pickEx(it.ex);if(!id)return;const s=tS(n);const rr=id==='wallpush'?tR(it.reps*2):(it.reps?tR(it.reps):0);
       for(let k=1;k<=s;k++){(it.sides||[null]).forEach(side=>{
-        steps.push(it.reps?W('main',id,{mode:'reps',reps:tR(it.reps),set:k,sets:s,side:side,block:label}):W('main',id,{mode:'time',secs:tT(it.secs),set:k,sets:s,side:side,block:label}))});
+        steps.push(it.reps?W('main',id,{mode:'reps',reps:rr,set:k,sets:s,side:side,block:label}):W('main',id,{mode:'time',secs:tT(it.secs),set:k,sets:s,side:side,block:label}))});
         rest(k<s?rin:rout)}
-      out.push({ex:id,txt:s+' × '+(it.reps?tR(it.reps):tT(it.secs)+' ث')})});
+      out.push({ex:id,txt:cnt(s,['مجموعة واحدة','مجموعتان','مجموعات','مجموعة'])+' · '+(it.reps?cnt(rr,['مرة واحدة','مرتان','مرات','مرة']):cnt(tT(it.secs),['ثانية','ثانيتان','ثوانٍ','ثانية']))+(it.sides?' لكل جهة':'')})});
     outline.push({label:label,items:out})}
   function circuit(label,ids,rounds,work,rs,rr){const exs=ids.map(pickEx).filter(Boolean),r=tired?Math.max(1,rounds-1):rounds;
     for(let k=1;k<=r;k++)exs.forEach((id,i)=>{steps.push(W('main',id,{mode:'time',secs:tT(work),round:k,rounds:r,block:label}));rest(i<exs.length-1?rs:rr,i<exs.length-1?'':'راحة بين الجولات')});
-    outline.push({label:label+' · '+cnt(r,['جولة','جولتان','جولات','جولة']),items:exs.map(id=>({ex:id,txt:tT(work)+' ث'}))})}
+    outline.push({label:label+' · '+cnt(r,['جولة','جولتان','جولات','جولة']),items:exs.map(id=>({ex:id,txt:cnt(tT(work),['ثانية','ثانيتان','ثوانٍ','ثانية'])}))})}
   function cool(){[['ffold',30],['quad',20,'اليمنى'],['quad',20,'اليسرى'],['chest',25],['child',30],['breathe',30]].forEach(a=>{
       steps.push(W('cool',a[0],{mode:'time',secs:a[1],side:a[2]||null,block:'تهدئة'}))});
-    outline.push({label:'تهدئة وتمدد',items:[['ffold','30 ث'],['quad','20 ث لكل ساق'],['chest','25 ث'],['child','30 ث'],['breathe','30 ث']].map(a=>({ex:a[0],txt:a[1]}))})}
+    outline.push({label:'تهدئة وتمدد',items:[['ffold','30 ثانية'],['quad','20 ثانية لكل ساق'],['chest','25 ثانية'],['child','30 ثانية'],['breathe','30 ثانية']].map(a=>({ex:a[0],txt:a[1]}))})}
   const rin=lv==='b'?35:30,rout=lv==='b'?45:40;
   if(key==='A'){
     warm(['jj','armcircle','sidebend','legswing']);
@@ -665,7 +668,7 @@ function buildSession(key,week,cf,tired){
     circuit('أقدام وردّ فعل',['quickfeet','shuffle',cf.equip.rope?'rope':'ropefake','skater','react'],pick([2,3,3,3],[3,3,4,4]),pick([20,25,25,30],[25,30,35,35]),25,50);
     const nb=tired?Math.max(2,Math.round(pick([4,5,5,6],[6,6,8,8])*.7)):pick([4,5,5,6],[6,6,8,8]);
     for(let k=1;k<=nb;k++){steps.push(W('main','sprint',{mode:'time',secs:tT(10),set:k,sets:nb,block:'انطلاقات'}));rest(35)}
-    outline.push({label:'انطلاقات سريعة',items:[{ex:'sprint',txt:nb+' × '+tT(10)+' ث'}]});
+    outline.push({label:'انطلاقات سريعة',items:[{ex:'sprint',txt:cnt(nb,['انطلاقة واحدة','انطلاقتان','انطلاقات','انطلاقة'])+' · '+tT(10)+' ثوانٍ'}]});
   }else if(key==='D'){
     warm(['jj','sidebend','legswing','armcircle']);
     sets('قوة انفجارية',[{ex:'squatjump',reps:pick([5,6,8,8],[8,10,12,12])},{ex:'wallsit',secs:pick([15,20,25,30],[25,30,40,45])}],pick([2,3,3,3],[3,3,3,4]),40,50);
@@ -1063,7 +1066,7 @@ function drawRun(){
     const head='<h2 class="ex-name">'+esc(st.name)+'</h2><p class="ex-how">'+esc(st.how)+'</p>';
     if(R.state==='cd')inner=stage+head+'<div class="cd num" id="rnum"></div>'+'<p class="rest-t">استعد...</p>'+setTxt+'<div class="run-actions"><button class="btn sec" data-act="run-skip">تخطّي التمرين</button></div>';
     else if(R.state==='work')inner=stage+head+ring()+setTxt+'<div class="run-actions"><button class="btn sec" data-act="run-pause">'+ic('pause',22)+'<span id="pl">إيقاف</span></button><button class="btn sec" data-act="run-skip">'+ic('skip',22)+'تخطّي</button></div>';
-    else inner=stage+head+'<div class="target">'+st.reps+'<small>تكرار'+(st.sets?' · المجموعة '+st.set+' من '+st.sets:'')+'</small></div>'+setTxt+'<div class="run-actions"><button class="btn good" data-act="run-done">'+ic('check',24)+'تمّت المجموعة</button></div>';
+    else inner=stage+head+'<div class="target">'+st.reps+'<small>'+(st.reps>2?'مرات':'مرة')+(st.sets?' · المجموعة '+st.set+' من '+st.sets:'')+'</small></div>'+setTxt+'<div class="run-actions"><button class="btn good" data-act="run-done">'+ic('check',24)+'تمّت المجموعة</button></div>';
   }
   host.innerHTML=shell(inner,st);hydrate(host);
   if(R.state!=='reps')tick();
