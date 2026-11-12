@@ -20,7 +20,7 @@
 :root{
   --bg:#F2F4FA; --surface:#FFFFFF; --surface-2:#E8ECF8; --ink:#10173A; --ink-2:#4B5382; --line:#D8DDEE;
   --primary:#2E3FA3; --on-primary:#FFFFFF; --accent:#FFA91F; --on-accent:#2A1A00; --good:#0F9F86; --bad:#D6453D;
-  --fig:#10173A; --fig-far:#8E96C6; --mat:#E3E8F7; --mat-2:#D3DAF0;
+  --fig:#10173A; --fig-far:#8E96C6; --skin:#EDB58C; --skin-far:#C98B63; --shirt:#F0623A; --shirt-far:#B8492C; --shorts:#27337E; --shorts-far:#56619F; --shoe:#1D2340; --shoe-far:#626A96; --hair:#2E1D15; --mat:#E3E8F7; --mat-2:#D3DAF0;
   --shadow:0 1px 2px rgba(16,23,58,.06),0 10px 28px rgba(16,23,58,.07);
   --sa:#E8694A; --sb:#12A58F; --sc:#E39A12; --sd:#5568E8; --sw:#D6409F;
   --display:'Lalezar','Readex Pro','Segoe UI',Tahoma,sans-serif;
@@ -29,13 +29,13 @@
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#0B1026; --surface:#151C42; --surface-2:#1E2656; --ink:#EEF0FF; --ink-2:#A8AFD9; --line:#2A3366;
   --primary:#7C8CFF; --on-primary:#0B1026; --accent:#FFB84A; --on-accent:#2A1A00; --good:#2BD3B2; --bad:#FF7A70;
-  --fig:#EEF0FF; --fig-far:#6F79B8; --mat:#1A2250; --mat-2:#232C66;
+  --fig:#EEF0FF; --fig-far:#6F79B8; --skin:#EDB58C; --skin-far:#B47D5A; --shirt:#FF7A4D; --shirt-far:#B65535; --shorts:#5B6CF0; --shorts-far:#3A469E; --shoe:#EEF0FF; --shoe-far:#8A93C8; --hair:#3B271C; --mat:#1A2250; --mat-2:#232C66;
   --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.35);
   --sa:#FF8A6B; --sb:#2BD3B2; --sc:#FFC654; --sd:#8E9BFF; --sw:#FF7EC8; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0B1026; --surface:#151C42; --surface-2:#1E2656; --ink:#EEF0FF; --ink-2:#A8AFD9; --line:#2A3366;
   --primary:#7C8CFF; --on-primary:#0B1026; --accent:#FFB84A; --on-accent:#2A1A00; --good:#2BD3B2; --bad:#FF7A70;
-  --fig:#EEF0FF; --fig-far:#6F79B8; --mat:#1A2250; --mat-2:#232C66;
+  --fig:#EEF0FF; --fig-far:#6F79B8; --skin:#EDB58C; --skin-far:#B47D5A; --shirt:#FF7A4D; --shirt-far:#B65535; --shorts:#5B6CF0; --shorts-far:#3A469E; --shoe:#EEF0FF; --shoe-far:#8A93C8; --hair:#3B271C; --mat:#1A2250; --mat-2:#232C66;
   --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.35);
   --sa:#FF8A6B; --sb:#2BD3B2; --sc:#FFC654; --sd:#8E9BFF; --sw:#FF7EC8; color-scheme:dark}
 
@@ -90,11 +90,20 @@ section.blk{margin-top:16px}
 .figsvg .wall{fill:var(--mat-2)}
 .figsvg .rope{fill:none;stroke:var(--ink-2);stroke-width:1.5;stroke-dasharray:3 5;opacity:.6}
 .figsvg .ropedot{fill:var(--accent)}
-.figsvg .head.hh{stroke:var(--surface);stroke-width:1.8}.figsvg .barl{stroke:var(--ink);stroke-width:4;stroke-linecap:round}.figsvg .barp{stroke:var(--mat-2);stroke-width:5;stroke-linecap:round}
-.figsvg .lb,.figsvg .torso,.figsvg .foot{fill:none;stroke-linecap:round;stroke-linejoin:round}
-.figsvg .lb{stroke-width:6}.figsvg .torso{stroke-width:9}.figsvg .foot{stroke-width:5}
-.figsvg .near{stroke:var(--fig)}.figsvg .far{stroke:var(--fig-far)}
-.figsvg .head{fill:var(--fig)}
+.figsvg .barl{stroke:var(--ink);stroke-width:4;stroke-linecap:round}.figsvg .barp{stroke:var(--mat-2);stroke-width:5;stroke-linecap:round}
+.figsvg line{stroke-linecap:round;fill:none}
+.figsvg .far{--k:var(--skin-far);--s:var(--shirt-far);--o:var(--shorts-far);--e:var(--shoe-far)}
+.figsvg .near,.figsvg.fr .far{--k:var(--skin);--s:var(--shirt);--o:var(--shorts);--e:var(--shoe)}
+.figsvg line.k{stroke:var(--k)}.figsvg circle.k{fill:var(--k)}.figsvg .s{stroke:var(--s)}.figsvg .o{stroke:var(--o)}.figsvg .e{stroke:var(--e)}
+.figsvg .hair{fill:var(--hair)}.figsvg .eye{fill:#22160F}
+#overlay{position:relative;z-index:70}
+.en{margin:-6px 0 8px;color:var(--ink-2);font-size:13px;text-align:end}
+.vid{margin-top:14px}.vbtn{width:100%}
+.vframe{position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#000}
+.vframe.sh{aspect-ratio:9/16;max-height:62vh;width:auto;margin:0 auto}
+.vframe iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.ylink{display:inline-block;margin-top:8px;font-size:14px;color:var(--primary)}
+.howbtn{display:flex;justify-content:center;margin:-4px 0 6px}.howbtn .chip{border:0;cursor:pointer;font:inherit;font-size:14px;font-weight:600;min-height:36px}
 .hero-body{padding:16px 18px 18px}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
 .chip{display:inline-flex;align-items:center;gap:6px;border-radius:99px;padding:3px 12px;font-size:13px;background:var(--surface-2);color:var(--ink)}
@@ -412,7 +421,7 @@ def('buttkicks','ركل الأرداف','اركض في المكان وقرّب �
 const SQ0=P({aF:[90,90],aB:[88,88],lF:[4,4],lB:[-2,-2]}),SQ1=P({t:150,h:30,aF:[95,95],aB:[92,92],lF:[72,-18],lB:[68,-22]});
 def('squat','القرفصاء','ادفع وركيك للخلف وانزل كأنك تجلس، ظهرك مستقيم وركبتاك باتجاه أصابع القدم، ثم قف.',{anchor:'ankles',tempo:1100,poses:[SQ0,SQ1]});
 def('squatfast','قرفصاء سريعة','نفس القرفصاء بإيقاع أسرع مع الحفاظ على الشكل الصحيح.',{anchor:'ankles',tempo:600,poses:[SQ0,SQ1]});
-def('squatjump','قفزة القرفصاء','انزل قرفصاء ثم اقفز لأعلى بخفّة واهبط بهدوء على ركبتين مرنتين.',{anchor:'ankles',sc:.74,tempo:520,
+def('squatjump','قفزة القرفصاء','انزل قرفصاء ثم اقفز لأعلى بخفّة واهبط بهدوء على ركبتين مرنتين.',{anchor:'ankles',sc:.84,tempo:520,
   easyHow:'انزل قرفصاء ثم قف بسرعة على أطراف أصابعك بدل القفز.',poses:[
   P({t:145,h:35,aF:[-40,-40],aB:[-45,-45],lF:[75,-15],lB:[72,-18]}),P({aF:[170,170],aB:[165,165],lF:[3,3],lB:[-3,-3],lift:26})]});
 const LH={aF:[-25,70],aB:[-28,68]};
@@ -420,8 +429,8 @@ def('lunge','الطعنة','خطوة كبيرة للأمام وانزل بركب
   P(LH),P(Object.assign({lF:[80,-10],lB:[-20,-77]},LH)),P(LH),P(Object.assign({lF:[-20,-77],lB:[80,-10]},LH))]});
 def('pushup','الضغط','جسمك مستقيم كخط. انزل بصدرك نحو الأرض ثم ادفع للأعلى.',{anchor:'handF',ax:176,tempo:900,poses:[
   P({t:114.6,h:-28,aF:[2,2],aB:[0,0],lF:[-65.4,-65.4],lB:[-66,-66]}),P({t:104.5,h:-18,aF:[-50,56],aB:[-52,54],lF:[-75.5,-75.5],lB:[-76,-76]})]});
-def('wallpush','الضغط على الحائط','قف أمام الحائط بخطوة وضع كفّيك عليه بعرض كتفيك. جسمك مستقيم، اثنِ كوعيك وقرّب صدرك من الحائط ثم ادفع. هذه أول خطوة نحو الضغط الكامل.',{anchor:'ankles',ax:120,tempo:900,poses:[
-  P({t:160,h:-5,aF:[85,85],aB:[83,83],lF:[-20,-20],lB:[-21,-21]}),P({t:146,h:-5,aF:[50,100],aB:[48,98],lF:[-34,-34],lB:[-35,-35]})]});
+def('wallpush','الضغط على الحائط','قف أمام الحائط بخطوة كبيرة وضع كفّيك عليه بعرض كتفيك. جسمك مستقيم كالعصا، اثنِ كوعيك وقرّب صدرك من الحائط، ثم ادفع للعودة.',{anchor:'ankles',ax:95,prop:'wallR',wallX:185,tempo:1000,poses:[
+  P({t:160,h:-5,aF:[90,90],aB:[88,88],lF:[-20,-20],lB:[-21,-21]}),P({t:145,h:-8,aF:[69,186],aB:[67,184],lF:[-35,-35],lB:[-36,-36]})]});
 def('kneepushup','الضغط على الركبتين','ركبتاك على الأرض وجسمك مستقيم من الركبة للرأس. انزل ثم ادفع.',{anchor:'handF',ax:176,tempo:900,poses:[
   P({t:125.6,h:-28,aF:[2,2],aB:[0,0],lF:[-54.4,-110],lB:[-55,-111]}),P({t:110.4,h:-18,aF:[-50,56],aB:[-52,54],lF:[-69.6,-110],lB:[-70,-111]})]});
 def('plank','البلانك','ارتكز على ساعديك وأصابع قدميك. شدّ بطنك وابقِ جسمك خطاً مستقيماً.',{anchor:'handF',ax:170,tempo:1500,poses:[
@@ -478,7 +487,7 @@ const HT=P({t:180,h:0,aF:[57.6,175.1],aB:[-57.6,-175.1],lF:[3,10],lB:[-3,-10]});
 const HG2=P(Object.assign({},HG,{t:181,lF:[6,6],lB:[-6,-6]})),HT2=P(Object.assign({},HT,{t:179.2}));
 const BARO={front:1,hang:1,barY:20,hx:24,ax:120,sc:.72};
 const WARN_BAR='العقلة يجب أن تكون ثابتة ومثبّتة جيداً، وتمرّن بوجود شخص كبير بالقرب منك.';
-def('pullup','العقلة',BARW+'تعلّق بكفّين للأمام، شدّ كتفيك وابطنك، ثم اسحب جسمك حتى يعلو ذقنك العقلة وانزل ببطء وتحكّم.',Object.assign({tempo:1100,warn:WARN_BAR,poses:[HG,HT]},BARO));
+def('pullup','العقلة',BARW+'تعلّق بكفّين للأمام، شدّ كتفيك وبطنك، ثم اسحب جسمك حتى يعلو ذقنك العقلة وانزل ببطء وتحكّم.',Object.assign({tempo:1100,warn:WARN_BAR,poses:[HG,HT]},BARO));
 def('negpull','العقلة السلبية',BARW+'اصعد على كرسي حتى يعلو ذقنك العقلة، ثم انزل ببطء مدة 3 إلى 5 ثوانٍ حتى تمتد ذراعاك. هذا أفضل طريق لأول عقلة.',Object.assign({tempo:1800,warn:WARN_BAR,poses:[HT,HG]},BARO));
 def('deadhang','التعلّق الثابت',BARW+'تعلّق بالعقلة وذراعاك ممدودتان وكتفاك مشدودان بعيداً عن أذنيك. تنفّس بهدوء وثبّت.',Object.assign({tempo:1700,warn:WARN_BAR,poses:[HG,HG2]},BARO));
 def('chinhold','الثبات فوق العقلة',BARW+'اصعد حتى يعلو ذقنك العقلة وثبّت أطول وقت ممكن، وبطنك مشدود.',Object.assign({tempo:1600,warn:WARN_BAR,poses:[HT,HT2]},BARO));
@@ -517,13 +526,16 @@ const SUB={pushup:'kneepushup',kneepushup:'wallpush',diamond:'kneepushup',widepu
 
 Object.keys(SUB).forEach(k=>{EX[k].sub=SUB[k]});
 
+/* ---- names, tips, videos (Arabic, male presenters) ---- */
+const META={"jj":{"n":"قفز فتح وضم","en":"Jumping Jacks","tip":"اهبط على أطراف أصابعك بخفّة.","yt":"tyC3SodVpeA","sh":0},"armcircle":{"n":"دوائر الذراعين","en":"Arm Circles","tip":"ابدأ بدوائر صغيرة ثم كبّرها، ثم اعكس الاتجاه.","yt":"aJAhmgfjNLE","sh":1,"dub":1},"legswing":{"n":"أرجحة الساق","en":"Leg Swings","tip":"امسك الحائط بيدك لتتوازن، وجذعك ثابت.","yt":"MWJ36dnb0AM","sh":0,"dub":1},"sidebend":{"n":"ميل الجذع للجانب","en":"Side Bend","tip":"مِل للجانب فقط، لا للأمام.","yt":"gU0h9jrPG6I","sh":1,"dub":1},"highknees":{"n":"رفع الركبتين","en":"High Knees","tip":"ابقَ على أطراف أصابعك وظهرك مستقيم."},"buttkicks":{"n":"ركل الكعبين للخلف","en":"Butt Kicks","tip":"حرّك ذراعيك كأنك تركض."},"squat":{"n":"القرفصاء (سكوات)","en":"Squat","tip":"كعباك على الأرض طوال الوقت.","yt":"xkVSQSquj00","sh":1},"squatfast":{"n":"قرفصاء سريعة","en":"Fast Squats","tip":"السرعة لا تعني شكلاً خاطئاً: ظهرك مستقيم دائماً.","yt":"xkVSQSquj00","sh":1},"squatjump":{"n":"قرفصاء مع قفز","en":"Jump Squat","tip":"اهبط بهدوء وركبتاك مثنيتان، لا على ساقين مستقيمتين.","yt":"K4asFBkUMHM","sh":1},"lunge":{"n":"خطوة الطعن (لانجز)","en":"Lunge","tip":"ركبتك الأمامية فوق كاحلك، وجذعك مستقيم.","yt":"8RUd5qD8zYo","sh":1},"pushup":{"n":"الضغط الكامل","en":"Push-up","tip":"لا تدع وركيك يهبطان أو يرتفعان.","yt":"ZBIE7ewmIsk","sh":0},"wallpush":{"n":"الضغط على الحائط","en":"Wall Push-up","tip":"كلما ابتعدت قدماك عن الحائط صار التمرين أصعب.","yt":"ohlPk3Ye5z0","sh":1},"kneepushup":{"n":"الضغط على الركبتين","en":"Knee Push-up","tip":"لا تثنِ وركيك: جسمك خط مستقيم من الركبة للرأس.","yt":"yHSIkobbuus","sh":1},"plank":{"n":"البلانك (الثبات على الساعدين)","en":"Plank","tip":"لا ترفع مؤخرتك ولا تُنزل بطنك.","yt":"uh2IO2TNZEE","sh":1},"mtn":{"n":"متسلّق الجبل","en":"Mountain Climber","tip":"يداك تحت كتفيك تماماً.","yt":"2J62zI7hhlA","sh":1},"glute":{"n":"جسر الوركين","en":"Glute Bridge","tip":"اضغط بكعبيك على الأرض، وشدّ أردافك في الأعلى."},"superman":{"n":"السوبرمان","en":"Superman","tip":"انظر إلى الأرض حتى تبقى رقبتك مستقيمة.","yt":"QZTWeojNZNA","sh":1},"deadbug":{"n":"الحشرة الميتة","en":"Dead Bug","tip":"أسفل ظهرك ملتصق بالأرض طوال الوقت.","yt":"ZXG8OHKER3k","sh":1,"dub":1},"wallsit":{"n":"الجلوس على الحائط","en":"Wall Sit","tip":"ركبتاك فوق كاحليك وليس أمامهما.","yt":"2Nd5vP_q7MM","sh":1},"skater":{"n":"قفزة المتزلّج","en":"Skater Jump","tip":"اهبط على ساق مثنية قليلاً."},"quickfeet":{"n":"أقدام سريعة","en":"Quick Feet","tip":"خطوات صغيرة جداً وسريعة.","yt":"B0KL03-sBIs","sh":1},"shuffle":{"n":"الانزلاق الجانبي","en":"Side Shuffle","tip":"ابقَ منخفضاً ولا تقفز عالياً."},"rope":{"n":"نطّ الحبل","en":"Jump Rope","tip":"قفزات منخفضة، والمعصمان يحرّكان الحبل لا الذراعان.","yt":"VrYsx2OJN-E","sh":1},"ropefake":{"n":"نطّ الحبل الوهمي","en":"Jump Rope (no rope)","tip":"قفزات منخفضة على أطراف الأصابع.","yt":"InfxKw49q5I","sh":1},"sprint":{"n":"عدو سريع في المكان","en":"Sprint in Place","tip":"حرّك ذراعيك بقوة، فهي تزيد سرعتك.","yt":"jXiWeOsA1Hg","sh":0},"react":{"n":"ردّ الفعل","en":"Reaction Drill","tip":"كن جاهزاً على أطراف أصابعك قبل الإشارة.","yt":"ik12z_JsG3M","sh":1},"stance":{"n":"الوقفة القتالية","en":"Fighting Stance","tip":"ذقنك للأسفل قليلاً ويداك تحميان وجهك.","yt":"j0ZhZ4pJIkQ","sh":1},"footwork":{"n":"حركة القدمين","en":"Footwork","tip":"لا تُقاطع قدميك ولا تجمعهما.","yt":"MO9Pmq19I2Y","sh":0},"strikes":{"n":"لكمات مستقيمة (جاب وكروس)","en":"Jab & Cross","tip":"أعد يدك فوراً لحماية وجهك بعد كل لكمة.","yt":"qHEPGsDvU1o","sh":0},"kick":{"n":"الركلة الأمامية","en":"Front Kick","tip":"ارفع ركبتك أولاً ثم افرد ساقك.","yt":"5Oqzeol18PQ","sh":0},"balance":{"n":"التوازن على ساق","en":"Single-Leg Balance","tip":"شدّ بطنك، وجرّب إغماض عينيك عندما يصبح سهلاً.","yt":"Iuwe1Akr7eo","sh":1},"ffold":{"n":"ثني الجذع للأمام","en":"Forward Fold","tip":"لا ترتدّ: إطالة هادئة فقط.","yt":"nBUdw2Ltxcw","sh":1},"quad":{"n":"إطالة الفخذ الأمامية","en":"Quad Stretch","tip":"إحساس بالشدّ بلا ألم.","yt":"LROVK8lD7FA","sh":1},"chest":{"n":"إطالة الصدر","en":"Chest Stretch","tip":"افتح كتفيك للخلف ولا تقوّس ظهرك كثيراً.","yt":"q4aFFnfWvtY","sh":0},"child":{"n":"وضعية الطفل","en":"Child’s Pose","tip":"أرخِ كتفيك وتنفّس ببطء.","yt":"rspzY-wQEaU","sh":0},"breathe":{"n":"تنفّس عميق","en":"Deep Breathing","tip":"الشهيق من الأنف والزفير من الفم ببطء.","yt":"bLUdPWR4lPs","sh":1},"pullup":{"n":"العقلة","en":"Pull-up","tip":"لا تتأرجح: اسحب بعضلات ظهرك.","yt":"5j2XeUzsc8g","sh":0},"negpull":{"n":"العقلة السلبية (النزول البطيء)","en":"Negative Pull-up","tip":"كلما كان النزول أبطأ كان أفضل.","yt":"w5rZTCXYeKA","sh":1},"deadhang":{"n":"التعلّق الثابت","en":"Dead Hang","tip":"إذا تعبت يداك انزل بهدوء ولا تقفز.","yt":"VxYa_fikk4M","sh":1},"chinhold":{"n":"الثبات فوق العقلة","en":"Chin-over-Bar Hold","tip":"لا تحبس نفَسك.","yt":"FgtmrKzLils","sh":1},"diamond":{"n":"الضغط الماسي","en":"Diamond Push-up","tip":"إذا كان صعباً أدّه على الركبتين.","yt":"DLUmBX1gtYI","sh":1},"widepush":{"n":"الضغط الواسع","en":"Wide Push-up","tip":"لا تفتح يديك أكثر من اللازم حتى لا تتعب كتفيك.","yt":"XrjEhrB4OZ4","sh":1},"pushhold":{"n":"ثبات وضع الضغط","en":"High Plank Hold","tip":"كفّاك تحت كتفيك ونظرك للأرض.","yt":"DkHb8u___T8","sh":1},"pushlow":{"n":"الثبات في أسفل الضغط","en":"Low Push-up Hold","tip":"انزل ببطء مدة 3 ثوانٍ.","yt":"dr-CChbrdzE","sh":1},"kneehold":{"n":"ثبات الضغط على الركبتين","en":"Knee Plank Hold","tip":"ضع ركبتيك على سجادة لراحتهما.","yt":"yHSIkobbuus","sh":1},"pike":{"n":"ضغط البايك للكتف","en":"Pike Push-up","tip":"رأسك يتجه للأرض بين يديك لا أمامهما.","yt":"KLwmKYE04aQ","sh":1},"hollow":{"n":"ثبات الجسم المقعّر","en":"Hollow Body Hold","tip":"إذا ارتفع ظهرك عن الأرض اثنِ ركبتيك.","yt":"KNL9F8CBdJQ","sh":1},"palm":{"n":"ضربة كعب الكف","en":"Palm Heel Strike","tip":"أصابعك مثنية للخلف، وكعب الكف هو الذي يضرب.","yt":"xulLrwVUx_A","sh":1,"dub":1},"elbow":{"n":"ضربة الكوع","en":"Elbow Strike","tip":"يدك الأخرى تحمي وجهك.","yt":"VHuzjVVRd1o","sh":1},"block":{"n":"الصدّ والتغطية","en":"Block & Cover","tip":"لا تغمض عينيك.","yt":"hg0Jqli3r4Q","sh":0},"knee":{"n":"ضربة الركبة","en":"Knee Strike","tip":"الوركان يدفعان للأمام مع الركبة.","yt":"OxeG-GzjOt4","sh":1},"lowkick":{"n":"الركلة المنخفضة","en":"Low Kick","tip":"عد لوضع الحماية بسرعة بعد الركلة.","yt":"Ky9IyCMUlPw","sh":1,"dub":1},"shadow":{"n":"ملاكمة الظل","en":"Shadow Boxing","tip":"تنفّس مع كل ضربة.","yt":"VL_Ntk3ihoM","sh":0},"wristescape":{"n":"التحرر من مسكة المعصم","en":"Wrist Release","tip":"الحركة سريعة ومفاجئة.","yt":"HHNGMot4zWU","sh":1},"fall":{"n":"السقوط الآمن","en":"Breakfall","tip":"ذقنك على صدرك دائماً حتى لا يرتطم رأسك.","yt":"mONxdnLk53M","sh":0,"dub":1},"standup":{"n":"النهوض الفني","en":"Technical Stand-up","tip":"عيناك على الخصم طوال الحركة.","yt":"mrROlHWDBA0","sh":1,"dub":1}};
+for(const k in META)Object.assign(EX[k],META[k]);
 /* --- figure math --- */
 const rad=d=>d*Math.PI/180,V=(a,l)=>[Math.sin(rad(a))*l,Math.cos(rad(a))*l],add=(a,b)=>[a[0]+b[0],a[1]+b[1]];
 const G=150;
 function placePose(p,ex){
-  const sc=ex.sc,neck=V(p.t,52),head=add(neck,V(p.t+p.h,15));
+  const sc=ex.sc,neck=V(p.t,50),head=add(neck,V(p.t+p.h,15));
   const eF=add(neck,V(p.aF[0],26)),hF=add(eF,V(p.aF[1],24)),eB=add(neck,V(p.aB[0],26)),hB=add(eB,V(p.aB[1],24));
-  const kF=V(p.lF[0],34),fF=add(kF,V(p.lF[1],34)),kB=V(p.lB[0],34),fB=add(kB,V(p.lB[1],34));
+  const kF=V(p.lF[0],36),fF=add(kF,V(p.lF[1],36)),kB=V(p.lB[0],36),fB=add(kB,V(p.lB[1],36));
   const J={hip:[0,0],neck,head,eF,hF,eB,hB,kF,fF,kB,fB};
   for(const k in J)J[k]=[J[k][0]*sc,J[k][1]*sc];
   const hr=9*sc;
@@ -541,28 +553,55 @@ function mixPose(a,b,k){const o={};for(const f in a){const x=a[f],y=b[f];o[f]=Ar
 const easeHold=f=>{const x=Math.min(1,Math.max(0,(f-.12)/.76));return x*x*(3-2*x)};
 function poseAt(ex,ms){const N=ex.poses.length,pos=(ms/ex.tempo)%N,i=Math.floor(pos);return mixPose(ex.poses[i],ex.poses[(i+1)%N],easeHold(pos-i))}
 function figSkeleton(id){
-  const ex=EX[id],far=ex.front?'near':'far';
-  return '<svg class="figsvg" viewBox="0 0 240 170" preserveAspectRatio="xMidYMid meet" role="img" aria-label="'+esc(ex.n)+'">'+
+  const ex=EX[id],L=c=>'<line class="'+c+'"/>';
+  const arm=s=>'<g class="arm'+s+'">'+L('ua k')+L('sl s')+L('fa k')+'<circle class="hand k"/></g>';
+  const leg=s=>'<g class="leg'+s+'">'+L('th k')+L('sho o')+L('sn k')+L('ft e')+'</g>';
+  return '<svg class="figsvg'+(ex.front?' fr':'')+'" viewBox="0 0 240 170" preserveAspectRatio="xMidYMid meet" role="img" aria-label="'+esc(ex.n)+'">'+
    '<rect class="floor" x="0" y="150" width="240" height="20"/><line class="gline" x1="0" y1="150" x2="240" y2="150"/>'+
    '<ellipse class="shadow" cx="120" cy="153" rx="36" ry="4"/>'+
-   (ex.prop==='wall'?'<rect class="wall" x="0" y="0" width="10" height="150"/>':'')+
+   (ex.prop==='wall'||ex.prop==='wallR'?'<rect class="wall" x="0" y="0" width="10" height="150"/>':'')+
    (ex.hang?'<line class="barp" x1="48" y1="'+ex.barY+'" x2="48" y2="150"/><line class="barp" x1="192" y1="'+ex.barY+'" x2="192" y2="150"/><line class="barl" x1="40" y1="'+ex.barY+'" x2="200" y2="'+ex.barY+'"/>':'')+
    (ex.prop==='rope'?'<ellipse class="rope" cx="120" cy="82" rx="30" ry="66"/><circle class="ropedot" r="4.5"/>':'')+
-   '<polyline class="lb '+far+' legB"/><polyline class="lb '+far+' armB"/><line class="foot '+far+' footB"/>'+
-   '<line class="torso near"/><polyline class="lb near legF"/><line class="foot near footF"/><polyline class="lb near armF"/><circle class="head'+(ex.hang?' hh':'')+'"/></svg>';
+   '<g class="far">'+arm('B')+leg('B')+'</g>'+
+   '<g class="near">'+L('neck k')+L('chest s')+L('pelvis o')+leg('F')+
+   '<g class="headg"><circle class="hair"/><circle class="face k"/><circle class="eye e1"/><circle class="eye e2"/></g>'+arm('F')+'</g></svg>';
 }
 function paint(svg,ex,pr,ms){
-  const r=svg._r||(svg._r={});const q=s=>r[s]||(r[s]=svg.querySelector('.'+s));
-  const J=pr.J,pts=function(){return Array.prototype.map.call(arguments,p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ')};
-  q('legB').setAttribute('points',pts(J.hip,J.kB,J.fB));q('legF').setAttribute('points',pts(J.hip,J.kF,J.fF));
-  q('armB').setAttribute('points',pts(J.neck,J.eB,J.hB));q('armF').setAttribute('points',pts(J.neck,J.eF,J.hF));
-  const t=q('torso');t.setAttribute('x1',J.hip[0]);t.setAttribute('y1',J.hip[1]);t.setAttribute('x2',J.neck[0]);t.setAttribute('y2',J.neck[1]);
-  const h=q('head');h.setAttribute('cx',J.head[0]);h.setAttribute('cy',J.head[1]);h.setAttribute('r',pr.hr);
-  [['footF',J.fF,pr.sF],['footB',J.fB,pr.sB]].forEach(a=>{const f=q(a[0]),show=!ex.front&&Math.abs(a[2])<70;
-    f.style.display=show?'':'none';if(show){f.setAttribute('x1',a[1][0]);f.setAttribute('y1',a[1][1]);f.setAttribute('x2',a[1][0]+9*pr.sc);f.setAttribute('y2',a[1][1])}});
-  const s=q('shadow');s.setAttribute('cx',(J.hip[0]+(J.fF[0]+J.fB[0])/2)/2);s.setAttribute('rx',Math.max(18,38-pr.lift*.5));s.style.opacity=Math.max(.04,.12-pr.lift*.003);
-  if(ex.prop==='wall'){const w=q('wall');w.setAttribute('x',ex.ax-46-12)}
-  if(ex.prop==='rope'){const e=q('rope'),d=q('ropedot'),cx=J.hip[0],a=ms/(ex.tempo*2)*Math.PI*2;
+  const r=svg._r||(svg._r={});const q=s=>r[s]||(r[s]=svg.querySelector(s));
+  const J=pr.J,s=pr.sc,fr=!!ex.front,f=v=>v.toFixed(1);
+  const mix=(a,b,k)=>[a[0]+(b[0]-a[0])*k,a[1]+(b[1]-a[1])*k],sh=(p,v)=>[p[0]+v[0],p[1]+v[1]];
+  const seg=(sel,a,b,w)=>{const e=q(sel);e.setAttribute('x1',f(a[0]));e.setAttribute('y1',f(a[1]));e.setAttribute('x2',f(b[0]));e.setAttribute('y2',f(b[1]));e.setAttribute('stroke-width',(w*s).toFixed(2))};
+  const dot=(sel,p,rr)=>{const e=q(sel);e.setAttribute('cx',f(p[0]));e.setAttribute('cy',f(p[1]));e.setAttribute('r',(rr*s).toFixed(2))};
+  const nrm=(a,b)=>{const x=b[0]-a[0],y=b[1]-a[1],l=Math.hypot(x,y)||1;return [x/l,y/l]};
+  const u=nrm(J.hip,J.neck),pp=[-u[1],u[0]];
+  const oS=fr?8.5*s:0,oH=fr?4.6*s:0;
+  // torso
+  seg('.pelvis',J.hip,mix(J.hip,J.neck,.3),fr?18:15.5);
+  seg('.chest',mix(J.hip,J.neck,.34),mix(J.hip,J.neck,.88),fr?21:16);
+  // head
+  const hu=nrm(J.neck,J.head),hf=[-hu[1],hu[0]],hr=pr.hr/s;
+  seg('.neck',J.neck,mix(J.neck,J.head,.75),6.4);
+  if(fr){dot('.hair',sh(J.head,[hu[0]*1.9*s,hu[1]*1.9*s]),hr*.98);dot('.face',J.head,hr);
+    dot('.e1',sh(J.head,[hf[0]*hr*.36*s-hu[0]*0+hu[0]*hr*.05*s,hf[1]*hr*.36*s+hu[1]*hr*.05*s]),1.15);
+    dot('.e2',sh(J.head,[-hf[0]*hr*.36*s+hu[0]*hr*.05*s,-hf[1]*hr*.36*s+hu[1]*hr*.05*s]),1.15)}
+  else{dot('.hair',sh(J.head,[(-hf[0]*1.7+hu[0]*1.5)*s,(-hf[1]*1.7+hu[1]*1.5)*s]),hr);dot('.face',J.head,hr*.97);
+    dot('.e1',sh(J.head,[(hf[0]*hr*.55+hu[0]*hr*.12)*s,(hf[1]*hr*.55+hu[1]*hr*.12)*s]),1.25);q('.e2').setAttribute('r',0)}
+  // limbs
+  [['F',1],['B',-1]].forEach(([k,sg])=>{
+    const vs=[pp[0]*oS*sg,pp[1]*oS*sg],vh=[pp[0]*oH*sg,pp[1]*oH*sg];
+    const S=sh(J.neck,vs),E=sh(J['e'+k],vs),H=sh(J['h'+k],vs),hd=nrm(E,H);
+    seg('.arm'+k+' .ua',S,E,7.4);seg('.arm'+k+' .sl',S,mix(S,E,.5),9.4);seg('.arm'+k+' .fa',E,H,6.4);
+    dot('.arm'+k+' .hand',sh(H,[hd[0]*1.6*s,hd[1]*1.6*s]),3.7);
+    const Hp=sh(J.hip,vh),K=sh(J['k'+k],vh),Fo=sh(J['f'+k],vh),sd=nrm(K,Fo),ang=k==='F'?pr.sF:pr.sB;
+    seg('.leg'+k+' .th',Hp,K,10.4);seg('.leg'+k+' .sho',Hp,mix(Hp,K,.55),12.4);seg('.leg'+k+' .sn',K,Fo,8);
+    if(fr)seg('.leg'+k+' .ft',sh(Fo,[-2.4*s*sg*0,0]),sh(Fo,[3.2*s*sg,0]),6.2);
+    else if(Math.abs(ang)<70)seg('.leg'+k+' .ft',sh(Fo,[-2.2*s,0]),sh(Fo,[9.5*s,0]),6);
+    else seg('.leg'+k+' .ft',Fo,sh(Fo,[sd[0]*3.5*s,sd[1]*3.5*s]),7.2);
+  });
+  const sw=q('.shadow');sw.setAttribute('cx',(J.hip[0]+(J.fF[0]+J.fB[0])/2)/2);sw.setAttribute('rx',Math.max(18,38-pr.lift*.5));sw.style.opacity=Math.max(.04,.12-pr.lift*.003);
+  if(ex.prop==='wall')q('.wall').setAttribute('x',ex.ax-46-12);
+  if(ex.prop==='wallR')q('.wall').setAttribute('x',ex.wallX);
+  if(ex.prop==='rope'){const e=q('.rope'),d=q('.ropedot'),cx=J.hip[0],a=ms/(ex.tempo*2)*Math.PI*2;
     e.setAttribute('cx',cx);d.setAttribute('cx',cx+30*Math.sin(a));d.setAttribute('cy',82-66*Math.cos(a))}
 }
 function mountFig(host){
@@ -1011,17 +1050,26 @@ function openSheet(title,body){
   $('#overlay').innerHTML='<div class="scrim" data-act="sheet-close"></div><div class="sheet" role="dialog" aria-label="'+esc(title)+'"><div class="sheet-h"><h3>'+esc(title)+'</h3><button class="icbtn" data-act="sheet-close" aria-label="إغلاق">'+ic('x',22)+'</button></div><div class="sheet-b">'+body+'</div></div>';
   hydrate($('#overlay'));
 }
-const closeSheet=()=>{$('#overlay').innerHTML=''};
+const closeSheet=()=>{$('#overlay').innerHTML='';if(R.vp){R.vp=false;if(R.paused){R.paused=false;R.endAt=Date.now()+R.left;const p=$('#pl');if(p)p.textContent='إيقاف'}}};
 function peek(key,week){
   const d=derive(),sess=buildSession(key,+week,d.cf,false),s=SESS[key];
   let o='<div class="chips"><span class="chip tint" style="--tint:var('+s.c+')">'+s.tag+'</span><span class="chip">الأسبوع '+week+'</span><span class="chip">'+cnt(sess.mins,F_MIN)+'</span></div><p class="muted">'+s.desc+'. اضغط على أي تمرين لتراه متحركاً.</p>';
   sess.outline.forEach(sec=>{o+='<div class="osec">'+sec.label+'</div><div class="list">'+sec.items.map(it=>'<button class="row" data-act="exinfo" data-ex="'+it.ex+'"><div class="thumb">'+figH(it.ex,true)+'</div><div class="grow"><h4 style="font-size:17px">'+EX[it.ex].n+'</h4><p class="sub">'+it.txt+'</p></div></button>').join('')+'</div>'});
   openSheet(s.name,o);
 }
+function vidBox(id){const ex=EX[id];if(!ex.yt)return '<p class="muted" style="font-size:13.5px;margin-top:12px">لا يوجد فيديو عربي مناسب لهذا التمرين بعد، اتّبع الرسم المتحرك.</p>';
+  return '<div class="vid" id="vid"><button class="btn sec vbtn" data-act="vid-play" data-ex="'+id+'">'+ic('play',22)+'شاهد الشرح بالفيديو</button></div>';}
 function exinfo(id){
   const ex=EX[id];
-  openSheet(ex.n,'<div class="stage">'+figH(id)+'</div><p style="font-size:16px">'+ex.how+'</p>'+(ex.easyHow?'<div class="tip">'+ic('info',20)+'<span>نسخة أسهل: '+ex.easyHow+'</span></div>':'')+(ex.warn?'<div class="tip" style="margin-top:10px">'+ic('shield',20)+'<span>'+ex.warn+'</span></div>':'')+'<p class="safe" style="margin:10px 0 0">توقّف فوراً إذا شعرت بألم أو دوخة.</p>');
+  openSheet(ex.n,(ex.en?'<p class="en" dir="ltr">'+esc(ex.en)+'</p>':'')+'<div class="stage">'+figH(id)+'</div><p style="font-size:16px">'+ex.how+'</p>'+
+   (ex.tip?'<div class="tip">'+ic('target',20)+'<span><b>انتبه:</b> '+ex.tip+'</span></div>':'')+
+   (ex.easyHow?'<div class="tip" style="margin-top:10px">'+ic('info',20)+'<span>نسخة أسهل: '+ex.easyHow+'</span></div>':'')+(ex.warn?'<div class="tip" style="margin-top:10px">'+ic('shield',20)+'<span>'+ex.warn+'</span></div>':'')+
+   vidBox(id)+'<p class="safe" style="margin:10px 0 0">توقّف فوراً إذا شعرت بألم أو دوخة.</p>');
 }
+function playVid(id){const ex=EX[id],box=$('#vid');if(!box||!ex.yt)return;
+  box.innerHTML='<div class="vframe'+(ex.sh?' sh':'')+'"><iframe src="https://www.youtube-nocookie.com/embed/'+ex.yt+'?rel=0&modestbranding=1&playsinline=1&autoplay=1&hl=ar&cc_lang_pref=ar" title="'+esc(ex.n)+'" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>'+
+  (ex.dub?'<p class="muted" style="font-size:13px;margin:8px 0 0">هذا الفيديو مُدبلج للعربية. إن سمعته بلغة أخرى، اختر الصوت العربي من إعدادات الفيديو ⚙️.</p>':'')+
+  '<a class="ylink" href="https://www.youtube.com/watch?v='+ex.yt+'" target="_blank" rel="noopener">فتح في يوتيوب ↗</a>';}
 
 /* ============ runner ============ */
 const R={sound:true,i:0,state:'',steps:[],sess:null,done:0,t0:0,iv:null,endAt:0,left:0,paused:false,last:-1,fin:null,wl:null,cueAt:0,cue:-1};
@@ -1058,12 +1106,12 @@ function drawRun(){
   if(R.state==='rest'){
     const nx=R.steps.slice(R.i+1).find(s=>s.kind==='work');
     inner='<h2 class="ex-name" style="margin-top:6px">'+(st.label||'استراحة')+'</h2>'+ring()+'<p class="rest-t">تنفّس بعمق واشرب رشفة ماء</p>'+
-      (nx?'<div class="restnext"><div class="thumb">'+figH(nx.ex,true)+'</div><div><span class="muted" style="font-size:12.5px">التالي</span><h4 style="font-size:20px">'+esc(nx.name)+'</h4><span class="muted" style="font-size:13px">'+(nx.mode==='reps'?nx.reps+' تكرار':nx.secs+' ثانية')+'</span></div></div>':'')+
+      (nx?'<div class="restnext"><div class="thumb">'+figH(nx.ex,true)+'</div><div><span class="muted" style="font-size:12.5px">التالي</span><h4 style="font-size:20px">'+esc(nx.name)+'</h4><span class="muted" style="font-size:13px">'+(nx.mode==='reps'?nx.reps+' مرات':nx.secs+' ثانية')+'</span></div></div>':'')+
       '<div class="run-actions"><button class="btn sec" data-act="run-add">+10 ثوانٍ</button><button class="btn" data-act="run-skip">تخطّي</button></div>';
   }else{
     const setTxt=st.sets?'<div class="dots">'+Array.from({length:st.sets},(_,k)=>'<i class="'+(k<st.set?'on':'')+'"></i>').join('')+'</div>':st.rounds?'<div class="rest-t">الجولة '+st.round+' من '+st.rounds+'</div>':'';
     const stage='<div class="stage" style="--tint:'+curTint()+'">'+figH(st.ex)+(EX[st.ex].react?'<div class="cue" id="cue"></div>':'')+'</div>';
-    const head='<h2 class="ex-name">'+esc(st.name)+'</h2><p class="ex-how">'+esc(st.how)+'</p>';
+    const head='<h2 class="ex-name">'+esc(st.name)+'</h2><p class="ex-how">'+esc(st.how)+'</p><div class="howbtn"><button class="chip" data-act="run-info">'+ic('play',16)+(EX[st.ex].yt?'شاهد الشرح':'طريقة الأداء')+'</button></div>';
     if(R.state==='cd')inner=stage+head+'<div class="cd num" id="rnum"></div>'+'<p class="rest-t">استعد...</p>'+setTxt+'<div class="run-actions"><button class="btn sec" data-act="run-skip">تخطّي التمرين</button></div>';
     else if(R.state==='work')inner=stage+head+ring()+setTxt+'<div class="run-actions"><button class="btn sec" data-act="run-pause">'+ic('pause',22)+'<span id="pl">إيقاف</span></button><button class="btn sec" data-act="run-skip">'+ic('skip',22)+'تخطّي</button></div>';
     else inner=stage+head+'<div class="target">'+st.reps+'<small>'+(st.reps>2?'مرات':'مرة')+(st.sets?' · المجموعة '+st.set+' من '+st.sets:'')+'</small></div>'+setTxt+'<div class="run-actions"><button class="btn good" data-act="run-done">'+ic('check',24)+'تمّت المجموعة</button></div>';
@@ -1093,6 +1141,7 @@ function runClick(act){
   else if(act==='run-add'){R.endAt+=10000;R.total+=10;tick()}
   else if(act==='run-pause'){R.paused=!R.paused;if(R.paused){R.left=R.endAt-Date.now()}else{R.endAt=Date.now()+R.left}const p=$('#pl');if(p)p.textContent=R.paused?'متابعة':'إيقاف'}
   else if(act==='run-sound'){R.sound=!R.sound;drawRun()}
+  else if(act==='run-info'){if(!R.paused&&R.state!=='reps'&&R.state!=='rest'){R.paused=true;R.left=R.endAt-Date.now();R.vp=true}exinfo(st.ex)}
   else if(act==='run-quit'){
     const ratio=R.done/Math.max(1,R.sess.works);
     const keep=ratio>=.5;
@@ -1201,6 +1250,7 @@ document.addEventListener('click',e=>{
     case 'set-combat':saveCfg({combatOpen:!cfg().combatOpen});break;
     case 'peek':peek(a.dataset.key,a.dataset.week);break;
     case 'exinfo':exinfo(a.dataset.ex);break;
+    case 'vid-play':playVid(a.dataset.ex);break;
     case 'sheet-close':closeSheet();break;
     case 'planweek':S.planWeek=+a.dataset.w;render(true);break;
     case 'run-end':endRun(a.dataset.keep==='1');break;
