@@ -97,6 +97,67 @@ section.blk{margin-top:16px}
 .figsvg line.k{stroke:var(--k)}.figsvg circle.k{fill:var(--k)}.figsvg .s{stroke:var(--s)}.figsvg .o{stroke:var(--o)}.figsvg .e{stroke:var(--e)}
 .figsvg .hair{fill:var(--hair)}.figsvg .eye{fill:#22160F}
 #overlay{position:relative;z-index:70}
+.exgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.exc{background:var(--surface);border:0;border-radius:14px;padding:6px 6px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;font:inherit;color:var(--ink);box-shadow:var(--shadow);min-width:0}
+.exc .fig{aspect-ratio:240/170;height:auto;border-radius:10px;background:var(--surface-2)}
+.exc b{font-size:12.5px;line-height:1.35;text-align:center}.exc small{font-size:11px;color:var(--primary);display:flex;align-items:center;gap:3px}
+#cele{position:fixed;inset:0;z-index:95;display:grid;place-items:center;overflow:hidden;text-align:center;color:#fff;background:radial-gradient(circle at 50% 42%,#33295f 0%,#120f2a 55%,#07060f 100%);animation:cfade .35s ease;padding:20px}
+#cele.bye{animation:cfade .35s ease reverse forwards}
+@keyframes cfade{from{opacity:0}to{opacity:1}}
+#cele .rays{position:absolute;left:50%;top:40%;width:170vmax;height:170vmax;margin:-85vmax 0 0 -85vmax;background:repeating-conic-gradient(from 0deg,color-mix(in srgb,var(--bc,#FFD54A) 30%,transparent) 0 9deg,transparent 9deg 20deg);opacity:0;transition:opacity .8s;animation:spin 22s linear infinite}
+#cele.open .rays{opacity:1}
+@keyframes spin{to{transform:rotate(360deg)}}
+#cele .flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+#cele.open .flash{animation:flash .6s ease-out}
+@keyframes flash{0%{opacity:.85}100%{opacity:0}}
+#cele .cin{position:relative;z-index:2;max-width:420px;width:100%}
+.c-eyebrow{font-size:15px;letter-spacing:.5px;color:#FFD54A;margin:0}
+.c-title{font-family:var(--display);font-size:34px;margin:4px 0 0;color:#fff}
+#cele.open .c-title.pre,#cele.open .c-eyebrow{display:none}
+.gstage{position:relative;height:270px;display:grid;place-items:center}
+.gift{position:relative;width:170px;height:170px;border:0;background:none;cursor:pointer;animation:bob 1.5s ease-in-out infinite;transition:transform .5s,opacity .5s}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-8px) rotate(-3deg)}75%{transform:translateY(-4px) rotate(3deg)}}
+#cele.opening .gift{animation:shake .12s linear infinite}
+@keyframes shake{0%{transform:translate(0,0) rotate(0)}25%{transform:translate(-5px,2px) rotate(-6deg)}50%{transform:translate(4px,-2px) rotate(5deg)}75%{transform:translate(-3px,1px) rotate(-4deg)}100%{transform:translate(0,0) rotate(0)}}
+.gift .box{position:absolute;left:18px;right:18px;bottom:6px;height:104px;border-radius:12px;background:linear-gradient(160deg,#FF7A55,#C63E27);box-shadow:inset 0 -10px 0 rgba(0,0,0,.15),0 18px 30px rgba(0,0,0,.45);transition:transform .6s .15s,opacity .6s .15s}
+.gift .box::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:24px;margin-left:-12px;background:linear-gradient(#FFE08A,#E9A21C)}
+.gift .lid{position:absolute;left:8px;right:8px;top:44px;height:36px;border-radius:10px;background:linear-gradient(160deg,#FF8E6C,#E2573A);box-shadow:0 6px 10px rgba(0,0,0,.25);z-index:2;transition:transform .8s cubic-bezier(.2,.8,.2,1),opacity .8s}
+.gift .lid::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:26px;margin-left:-13px;background:linear-gradient(#FFE08A,#E9A21C)}
+.bow{position:absolute;left:50%;top:-30px;width:0;height:0}
+.bow i{position:absolute;top:0;width:44px;height:34px;border:9px solid #F4B63F;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:transparent}
+.bow i:first-child{right:0;transform:rotate(-18deg)}.bow i:last-child{left:0;transform:rotate(18deg)}
+#cele.open .lid{transform:translate(70px,-300px) rotate(60deg);opacity:0}
+#cele.open .box{transform:translateY(60px) scale(.7);opacity:0}
+#cele.open .gift{animation:none;pointer-events:none}
+.prize{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(0) rotate(-25deg);filter:drop-shadow(0 0 22px color-mix(in srgb,var(--bc) 70%,#fff));pointer-events:none}
+#cele.open .prize{animation:prize 1s .25s cubic-bezier(.2,1.5,.35,1) forwards}
+@keyframes prize{0%{transform:translate(-50%,-10%) scale(0) rotate(-25deg)}60%{transform:translate(-50%,-62%) scale(1.15) rotate(6deg)}100%{transform:translate(-50%,-50%) scale(1) rotate(0)}}
+#cele .after{opacity:0;transform:translateY(20px);pointer-events:none}
+#cele.open .after{animation:up .6s .9s ease forwards;pointer-events:auto}
+.c-belt{font-family:var(--display);font-size:40px;margin:0;color:var(--bc);text-shadow:0 2px 0 rgba(0,0,0,.35),0 0 18px rgba(255,255,255,.25)}
+.c-rank{font-size:17px;margin:2px 0 0;color:#EDEBFF}.c-next{font-size:14px;color:#B9B5E6;margin:4px 0 0}
+.c-btn{margin-top:18px}#cele .c-btn{background:#FFD54A;color:#2A1A00;font-size:19px;box-shadow:0 8px 24px rgba(255,213,74,.35)}
+#cele .confetti{z-index:0}
+#cele.war{background:radial-gradient(circle at 50% 45%,#5a120c 0%,#1d0705 55%,#060202 100%)}
+#cele.war .embers i{animation-name:rise}
+@keyframes rise{from{transform:translateY(0);opacity:1}to{transform:translateY(-105vh);opacity:0}}
+#cele.war .wrap{animation:quake .5s 1.5s}
+@keyframes quake{0%,100%{transform:none}20%{transform:translate(-8px,4px)}40%{transform:translate(7px,-5px)}60%{transform:translate(-5px,3px)}80%{transform:translate(4px,-2px)}}
+.w1{font-size:19px;color:#F5D9C8;opacity:0;animation:w1 1.4s .2s ease forwards}
+@keyframes w1{0%{opacity:0;transform:translateY(10px)}35%,70%{opacity:1;transform:none}100%{opacity:.55}}
+.wshield{margin:6px auto 0;width:150px;opacity:0;transform:scale(3);animation:slam .45s 1.25s cubic-bezier(.5,0,.75,0) forwards;filter:drop-shadow(0 0 30px rgba(255,90,40,.6))}
+@keyframes slam{to{opacity:1;transform:scale(1)}}
+.wtitle{font-family:var(--display);font-size:50px;margin:8px 0 0;background:linear-gradient(180deg,#FFE08A,#FF7A2F 60%,#D9301F);-webkit-background-clip:text;background-clip:text;color:transparent;opacity:0;animation:up .6s 1.9s ease forwards;filter:drop-shadow(0 3px 12px rgba(255,80,30,.5))}
+.w2{font-size:16px;color:#F5D9C8;opacity:0;animation:up .6s 2.3s ease forwards;margin:6px 0 0}
+#cele .w3{opacity:0;animation:up .6s 2.8s ease forwards;background:linear-gradient(180deg,#FFD54A,#F2992E);color:#2A0E00}
+:root[data-stage="w"]{--bg:#F6EEE4;--surface:#FFFBF6;--surface-2:#F0E1D0;--ink:#26120E;--ink-2:#7A4B3E;--line:#E6D2BE;--primary:#A8261C;--on-primary:#fff;--accent:#D99A1E;--mat:#EBDBC7;--mat-2:#DCC5AB;--shirt:#2A2020;--shirt-far:#4A3B3A;--shorts:#B3261E;--shorts-far:#7E1F18;--shoe:#2A2020;--sw:#C2301F}
+@media (prefers-color-scheme:dark){:root[data-stage="w"]:not([data-theme="light"]){--bg:#120A09;--surface:#1F1311;--surface-2:#2C1A17;--ink:#FBEFE6;--ink-2:#C9A89A;--line:#3B2420;--primary:#FF6A55;--on-primary:#1A0705;--accent:#F2B33D;--mat:#2A1714;--mat-2:#3B211D;--shirt:#F1E6D8;--shirt-far:#B9A999;--shorts:#D7372A;--shorts-far:#8E2219;--shoe:#F1E6D8;--sw:#FF6A55}}
+:root[data-stage="w"][data-theme="dark"]{--bg:#120A09;--surface:#1F1311;--surface-2:#2C1A17;--ink:#FBEFE6;--ink-2:#C9A89A;--line:#3B2420;--primary:#FF6A55;--on-primary:#1A0705;--accent:#F2B33D;--mat:#2A1714;--mat-2:#3B211D;--shirt:#F1E6D8;--shirt-far:#B9A999;--shorts:#D7372A;--shorts-far:#8E2219;--shoe:#F1E6D8;--sw:#FF6A55}
+:root[data-stage="w"] body{background-image:radial-gradient(1200px 500px at 50% -120px,color-mix(in srgb,var(--primary) 16%,transparent),transparent 70%);background-attachment:fixed}
+:root[data-stage="w"] .brand h1{background:linear-gradient(180deg,var(--accent),var(--primary));-webkit-background-clip:text;background-clip:text;color:transparent}
+.stagebar{display:flex;align-items:center;gap:10px;margin-top:12px;padding:10px 14px;border-radius:16px;background:linear-gradient(90deg,color-mix(in srgb,var(--primary) 16%,var(--surface)),var(--surface));border:1px solid color-mix(in srgb,var(--primary) 30%,transparent);font-size:14px}
+.stagebar b{font-family:var(--display);font-size:18px;color:var(--primary);font-weight:400}
+
 .en{margin:-6px 0 8px;color:var(--ink-2);font-size:13px;text-align:end}
 .vid{margin-top:14px}.vbtn{width:100%}
 .vframe{position:relative;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#000}
@@ -403,14 +464,20 @@ const P=o=>Object.assign({},base,o);
 const stand=P({});
 const guard={aF:[35,150],aB:[25,145]};
 const EX={};
-function def(id,n,how,o){EX[id]=Object.assign({n:n,how:how,tempo:700,anchor:'hip',ax:120,sc:.95},o)}
+const fy=l=>36*Math.cos(l[0]*Math.PI/180)+36*Math.cos(l[1]*Math.PI/180);
+function plant(p){const yF=fy(p.lF),yB=fy(p.lB),d=yF-yB;if(Math.abs(d)<.3||Math.abs(d)>14)return p;
+  const k=d>0?'lF':'lB',Y=Math.min(yF,yB),l=p[k],v=(Y-36*Math.cos(l[0]*Math.PI/180))/36;if(v>1||v<-1)return p;
+  const a=Math.acos(v)*180/Math.PI,c=[a,-a].filter(x=>x<=l[0]+2&&x>=l[0]-150);if(!c.length)return p;
+  const best=c.sort((x,y)=>Math.abs(x-l[1])-Math.abs(y-l[1]))[0];const q=Object.assign({},p);q[k]=[l[0],best];return q}
+function def(id,n,how,o){EX[id]=Object.assign({n:n,how:how,tempo:700,anchor:'hip',ax:120,sc:.95},o);const e=EX[id];
+  if(e.anchor==='ankles'&&!e.front&&!e.noPlant)e.poses=e.poses.map(p=>p.lift?p:plant(p))}
 
 def('jj','قفزات الجاك','اقفز وافتح ذراعيك وقدميك ثم اجمعهما. تنفّس بانتظام.',{front:1,sc:.82,tempo:380,poses:[
   P({aF:[18,18],aB:[-18,-18],lF:[5,5],lB:[-5,-5]}),P({aF:[155,160],aB:[-155,-160],lF:[24,24],lB:[-24,-24],lift:8})]});
 def('armcircle','دوائر الذراعين','ارفع ذراعيك للجانبين ثم للأعلى ثم للأسفل بحركة دائرية كبيرة.',{front:1,sc:.84,tempo:650,poses:[
   P({aF:[90,90],aB:[-90,-90],lF:[8,8],lB:[-8,-8]}),P({aF:[172,172],aB:[-172,-172],lF:[8,8],lB:[-8,-8]}),
   P({aF:[90,90],aB:[-90,-90],lF:[8,8],lB:[-8,-8]}),P({aF:[12,12],aB:[-12,-12],lF:[8,8],lB:[-8,-8]})]});
-def('legswing','أرجحة الساق','قف على ساق وأرجح الأخرى للأمام وللخلف بهدوء. بدّل الساق في منتصف الوقت.',{anchor:'ankles',tempo:700,poses:[
+def('legswing','أرجحة الساق','قف على ساق وأرجح الأخرى للأمام وللخلف بهدوء. بدّل الساق في منتصف الوقت.',{anchor:'ankles',noPlant:1,tempo:700,poses:[
   P({t:178,aF:[60,60],aB:[-45,-45],lF:[55,55],lB:[0,0]}),P({t:182,aF:[-45,-45],aB:[60,60],lF:[-30,-35],lB:[0,0]})]});
 def('sidebend','ميلان الجذع','مدّ ذراعاً فوق رأسك وأمِل جذعك للجانب، ثم بدّل.',{front:1,sc:.84,tempo:900,poses:[
   P({t:196,aF:[196,196],aB:[-10,-10],lF:[10,10],lB:[-10,-10]}),P({t:164,aF:[10,10],aB:[-196,-196],lF:[10,10],lB:[-10,-10]})]});
@@ -418,12 +485,12 @@ def('highknees','رفع الركبتين','اركض في المكان وارفع
   P({t:176,aF:[-55,-20],aB:[70,140],lF:[92,5],lB:[2,-4],lift:4}),P({t:176,aF:[70,140],aB:[-55,-20],lF:[2,-4],lB:[92,5],lift:4})]});
 def('buttkicks','ركل الأرداف','اركض في المكان وقرّب كعبيك من أردافك.',{anchor:'ankles',tempo:340,poses:[
   P({t:176,aF:[-55,-20],aB:[70,140],lF:[8,-150],lB:[2,2],lift:3}),P({t:176,aF:[70,140],aB:[-55,-20],lF:[2,2],lB:[8,-150],lift:3})]});
-const SQ0=P({aF:[90,90],aB:[88,88],lF:[4,4],lB:[-2,-2]}),SQ1=P({t:150,h:30,aF:[95,95],aB:[92,92],lF:[72,-18],lB:[68,-22]});
+const SQ0=P({aF:[88,88],aB:[86,86],lF:[1,1],lB:[-1,-1]}),SQ1=P({t:136,h:30,aF:[88,88],aB:[86,86],lF:[94,-30],lB:[92,-32]});
 def('squat','القرفصاء','ادفع وركيك للخلف وانزل كأنك تجلس، ظهرك مستقيم وركبتاك باتجاه أصابع القدم، ثم قف.',{anchor:'ankles',tempo:1100,poses:[SQ0,SQ1]});
 def('squatfast','قرفصاء سريعة','نفس القرفصاء بإيقاع أسرع مع الحفاظ على الشكل الصحيح.',{anchor:'ankles',tempo:600,poses:[SQ0,SQ1]});
 def('squatjump','قفزة القرفصاء','انزل قرفصاء ثم اقفز لأعلى بخفّة واهبط بهدوء على ركبتين مرنتين.',{anchor:'ankles',sc:.84,tempo:520,
   easyHow:'انزل قرفصاء ثم قف بسرعة على أطراف أصابعك بدل القفز.',poses:[
-  P({t:145,h:35,aF:[-40,-40],aB:[-45,-45],lF:[75,-15],lB:[72,-18]}),P({aF:[170,170],aB:[165,165],lF:[3,3],lB:[-3,-3],lift:26})]});
+  P({t:138,h:30,aF:[-40,-40],aB:[-45,-45],lF:[90,-30],lB:[88,-32]}),P({aF:[170,170],aB:[165,165],lF:[3,3],lB:[-3,-3],lift:26})]});
 const LH={aF:[-25,70],aB:[-28,68]};
 def('lunge','الطعنة','خطوة كبيرة للأمام وانزل بركبتين مثنيتين، ثم ادفع للعودة وبدّل الساق.',{anchor:'ankles',tempo:800,poses:[
   P(LH),P(Object.assign({lF:[80,-10],lB:[-20,-77]},LH)),P(LH),P(Object.assign({lF:[-20,-77],lB:[80,-10]},LH))]});
@@ -465,17 +532,17 @@ def('footwork','حركة القدمين','من الوقفة القتالية: ت
   ST0,P({t:172,h:6,aF:[50,125],aB:[22,150],lF:[52,-8],lB:[-30,-18]}),ST0,P({t:176,h:6,aF:[50,125],aB:[22,150],lF:[30,-8],lB:[-14,-8]})]});
 def('strikes','لكمات وهمية','لكمات في الهواء ببطء وبشكل صحيح (جاب ثم كروس) دون أي احتكاك بأحد.',{anchor:'ankles',tempo:380,poses:[
   ST0,P({t:170,h:6,aF:[93,93],aB:[22,150],lF:[38,-10],lB:[-22,-14]}),ST0,P({t:166,h:6,aF:[40,150],aB:[95,95],lF:[38,-10],lB:[-22,-14]})]});
-const KR=Object.assign({t:178,lF:[5,5],lB:[-10,-10]},{aF:[40,145],aB:[25,150]});
+const KR=Object.assign({t:178,lF:[6,4],lB:[-8,-10]},{aF:[40,145],aB:[25,150]});const KS={lB:[-1,-1]};
 def('kick','ركلة أمامية بطيئة','ارفع ركبتك ثم افرد ساقك للأمام ببطء حتى مستوى الخصر وعد.',{anchor:'ankles',tempo:600,poses:[
-  P(KR),P(Object.assign({},KR,{t:176,lF:[90,5]})),P(Object.assign({},KR,{t:176,lF:[78,88]})),P(Object.assign({},KR,{t:176,lF:[90,5]}))]});
+  P(KR),P(Object.assign({},KR,KS,{t:184,lF:[92,4]})),P(Object.assign({},KR,KS,{t:192,lF:[82,82]})),P(Object.assign({},KR,KS,{t:184,lF:[92,4]}))]});
 def('balance','التوازن على ساق','قف على ساق وارفع الأخرى. ثبّت عينيك على نقطة أمامك.',{anchor:'ankles',tempo:1300,poses:[
   P({aF:[80,80],aB:[-60,-60],lF:[2,2],lB:[88,6]}),P({t:182,aF:[84,84],aB:[-66,-66],lF:[2,2],lB:[86,8]})]});
 def('ffold','ثني الجذع للأمام','انزل بجذعك نحو أصابع قدميك بهدوء ودع ذراعيك تتدلّيان.',{anchor:'ankles',tempo:2200,poses:[
-  P({aF:[8,8],aB:[6,6],lF:[2,2],lB:[-2,-2]}),P({t:70,h:-20,aF:[6,6],aB:[4,4],lF:[2,2],lB:[-2,-2]})]});
+  P({aF:[8,8],aB:[6,6],lF:[2,2],lB:[-2,-2]}),P({t:72,h:-20,aF:[6,6],aB:[4,4],lF:[16,14],lB:[14,12]})]});
 def('quad','تمدد الفخذ','امسك كاحلك خلف ظهرك وقرّبه من أردافك، وركبتاك متلاصقتان.',{anchor:'ankles',tempo:1800,poses:[
   P({t:188,aF:[90,90],aB:[-5,-5],lF:[2,2],lB:[-5,-165]}),P({t:186,aF:[96,96],aB:[-5,-5],lF:[2,2],lB:[-5,-167]})]});
-def('chest','تمدد الصدر','شبّك يديك خلف ظهرك وارفعهما قليلاً وافتح صدرك.',{anchor:'ankles',tempo:1800,poses:[
-  P({t:184,h:-4,aF:[-40,-35],aB:[-44,-38]}),P({t:186,h:-8,aF:[-55,-50],aB:[-58,-52]})]});
+def('chest','إطالة الصدر على الحائط','قف بجانب حائط أو إطار باب، ومدّ ذراعك للخلف وكفّك على الحائط بمستوى كتفك. تقدّم خطوة صغيرة وأدِر صدرك بعيداً عن الحائط بهدوء حتى تشعر بشدّ في صدرك، ثم بدّل الذراع.',{anchor:'ankles',ax:118,prop:'wall',tempo:1900,poses:[
+  P({t:180,h:-2,aF:[8,14],aB:[-88,-88],lF:[4,4],lB:[-4,-4]}),P({t:176,h:-8,aF:[12,22],aB:[-96,-96],lF:[24,4],lB:[-10,-12]})]});
 def('child','وضع الطفل','اجلس على كعبيك وانحنِ للأمام ومدّ ذراعيك على الأرض، وتنفّس بعمق.',{ax:100,tempo:2200,poses:[
   P({t:86,h:-8,aF:[100,100],aB:[98,98],lF:[54,-90],lB:[55,-91]}),P({t:88,h:-8,aF:[102,102],aB:[100,100],lF:[54,-90],lB:[55,-91]})]});
 def('breathe','تنفّس عميق','ارفع ذراعيك مع الشهيق وأنزلهما مع الزفير ببطء.',{front:1,sc:.84,tempo:2400,poses:[
@@ -509,13 +576,13 @@ const STL={lF:[38,-10],lB:[-22,-14]};
 const JAB=EX.strikes.poses[1],CROSS=EX.strikes.poses[3];
 const PALM1=P(Object.assign({t:168,h:6,aF:[88,128],aB:[22,150]},STL)),PALM2=P(Object.assign({t:166,h:6,aF:[40,150],aB:[88,128]},STL));
 def('palm','ضربة الكف','اضرب بكعب كفّك للأمام (باتجاه الذقن أو الأنف) مع دفع الوركين وتدوير القدم الخلفية، ثم أعدها فوراً لوضع الحماية. القوة تأتي من جسمك كله.',{anchor:'ankles',tempo:420,warn:WARN_W,poses:[ST0,PALM1,ST0,PALM2]});
-const ELB=P(Object.assign({t:160,h:6,aF:[40,150],aB:[90,-92]},STL));
-def('elbow','ضربة الكوع','للقتال القريب: لُفّ جذعك وسُق كوعك أفقياً أمامك، وساعدك مطوي، ثم عد لوضع الحماية. اضرب في الهواء ببطء وبشكل صحيح.',{anchor:'ankles',tempo:520,warn:WARN_W,poses:[ST0,ELB,ST0,P(Object.assign({},ELB,{aF:[90,-92],aB:[40,150],t:176}))]});
+const ELB=P(Object.assign({t:160,h:6,aF:[40,150],aB:[90,-128]},STL));
+def('elbow','ضربة الكوع','للقتال القريب: لُفّ جذعك وسُق كوعك أفقياً أمامك، وساعدك مطوي، ثم عد لوضع الحماية. اضرب في الهواء ببطء وبشكل صحيح.',{anchor:'ankles',tempo:520,warn:WARN_W,poses:[ST0,ELB,ST0,P(Object.assign({},ELB,{aF:[90,-128],aB:[40,150],t:176}))]});
 const BLK=P(Object.assign({t:174,h:-8,aF:[42,178],aB:[32,172]},STL));
 def('block','الصدّ والحماية','ارفع ساعديك أمام وجهك وضمّ كوعيك لحماية رأسك وأنت تراقب بعينيك، ثم أعد يديك لوضع الاستعداد.',{anchor:'ankles',tempo:520,warn:WARN_W,poses:[ST0,BLK]});
-const KNP=P(Object.assign({},KR,{t:182,lF:[100,15],aF:[75,120],aB:[70,115]}));
+const KNP=P(Object.assign({},KR,KS,{t:188,lF:[100,12],aF:[75,120],aB:[70,115]}));
 def('knee','ضربة الركبة','اسحب الخصم وهمياً بيديك نحوك وارفع ركبتك بقوة للأمام والأعلى (باتجاه البطن أو الفخذ). انزل ببطء واستعد توازنك.',{anchor:'ankles',tempo:600,warn:WARN_W,poses:[P(KR),KNP,P(KR),KNP]});
-def('lowkick','الركلة المنخفضة','ركلة قصيرة وسريعة بباطن القدم أو مقدمة الساق نحو ساق الخصم أو ركبته، ثم أنزل قدمك فوراً واستعد لوضع الحماية.',{anchor:'ankles',tempo:560,warn:WARN_W,poses:[P(KR),P(Object.assign({},KR,{t:176,lF:[40,64]}))]});
+def('lowkick','الركلة المنخفضة','ركلة قصيرة وسريعة بباطن القدم أو مقدمة الساق نحو ساق الخصم أو ركبته، ثم أنزل قدمك فوراً واستعد لوضع الحماية.',{anchor:'ankles',tempo:560,warn:WARN_W,poses:[P(KR),P(Object.assign({},KR,KS,{t:186,lF:[52,50]}))]});
 def('shadow','ظلّ القتال','حارب خصماً وهمياً: حركة قدمين، لكمة، كفّ، ركبة ثم صدّ. حافظ على يديك أمام وجهك وعلى توازنك في كل ضربة.',{anchor:'ankles',tempo:400,warn:WARN_W,poses:[ST0,JAB,CROSS,PALM1,ST0,KNP]});
 const WE0=P(Object.assign({t:174,h:6,aF:[90,90],aB:[25,150]},STL)),WE1=P(Object.assign({t:176,h:6,aF:[25,175],aB:[25,150]},STL));
 def('wristescape','التحرر من إمساك المعصم','تخيّل أن أحدهم أمسك معصمك: أدِر يدك باتجاه إبهامه (أضعف نقطة في قبضته) واسحب كوعك للخلف والأسفل بسرعة وقوة، ثم ارجع لوضع الحماية.',{anchor:'ankles',tempo:620,warn:WARN_W,poses:[WE0,WE1,WE0]});
@@ -527,7 +594,7 @@ const SUB={pushup:'kneepushup',kneepushup:'wallpush',diamond:'kneepushup',widepu
 Object.keys(SUB).forEach(k=>{EX[k].sub=SUB[k]});
 
 /* ---- names, tips, videos (Arabic, male presenters) ---- */
-const META={"jj":{"n":"قفز فتح وضم","en":"Jumping Jacks","tip":"اهبط على أطراف أصابعك بخفّة.","yt":"tyC3SodVpeA","sh":0},"armcircle":{"n":"دوائر الذراعين","en":"Arm Circles","tip":"ابدأ بدوائر صغيرة ثم كبّرها، ثم اعكس الاتجاه.","yt":"aJAhmgfjNLE","sh":1,"dub":1},"legswing":{"n":"أرجحة الساق","en":"Leg Swings","tip":"امسك الحائط بيدك لتتوازن، وجذعك ثابت.","yt":"MWJ36dnb0AM","sh":0,"dub":1},"sidebend":{"n":"ميل الجذع للجانب","en":"Side Bend","tip":"مِل للجانب فقط، لا للأمام.","yt":"gU0h9jrPG6I","sh":1,"dub":1},"highknees":{"n":"رفع الركبتين","en":"High Knees","tip":"ابقَ على أطراف أصابعك وظهرك مستقيم."},"buttkicks":{"n":"ركل الكعبين للخلف","en":"Butt Kicks","tip":"حرّك ذراعيك كأنك تركض."},"squat":{"n":"القرفصاء (سكوات)","en":"Squat","tip":"كعباك على الأرض طوال الوقت.","yt":"xkVSQSquj00","sh":1},"squatfast":{"n":"قرفصاء سريعة","en":"Fast Squats","tip":"السرعة لا تعني شكلاً خاطئاً: ظهرك مستقيم دائماً.","yt":"xkVSQSquj00","sh":1},"squatjump":{"n":"قرفصاء مع قفز","en":"Jump Squat","tip":"اهبط بهدوء وركبتاك مثنيتان، لا على ساقين مستقيمتين.","yt":"K4asFBkUMHM","sh":1},"lunge":{"n":"خطوة الطعن (لانجز)","en":"Lunge","tip":"ركبتك الأمامية فوق كاحلك، وجذعك مستقيم.","yt":"8RUd5qD8zYo","sh":1},"pushup":{"n":"الضغط الكامل","en":"Push-up","tip":"لا تدع وركيك يهبطان أو يرتفعان.","yt":"ZBIE7ewmIsk","sh":0},"wallpush":{"n":"الضغط على الحائط","en":"Wall Push-up","tip":"كلما ابتعدت قدماك عن الحائط صار التمرين أصعب.","yt":"ohlPk3Ye5z0","sh":1},"kneepushup":{"n":"الضغط على الركبتين","en":"Knee Push-up","tip":"لا تثنِ وركيك: جسمك خط مستقيم من الركبة للرأس.","yt":"yHSIkobbuus","sh":1},"plank":{"n":"البلانك (الثبات على الساعدين)","en":"Plank","tip":"لا ترفع مؤخرتك ولا تُنزل بطنك.","yt":"uh2IO2TNZEE","sh":1},"mtn":{"n":"متسلّق الجبل","en":"Mountain Climber","tip":"يداك تحت كتفيك تماماً.","yt":"2J62zI7hhlA","sh":1},"glute":{"n":"جسر الوركين","en":"Glute Bridge","tip":"اضغط بكعبيك على الأرض، وشدّ أردافك في الأعلى."},"superman":{"n":"السوبرمان","en":"Superman","tip":"انظر إلى الأرض حتى تبقى رقبتك مستقيمة.","yt":"QZTWeojNZNA","sh":1},"deadbug":{"n":"الحشرة الميتة","en":"Dead Bug","tip":"أسفل ظهرك ملتصق بالأرض طوال الوقت.","yt":"ZXG8OHKER3k","sh":1,"dub":1},"wallsit":{"n":"الجلوس على الحائط","en":"Wall Sit","tip":"ركبتاك فوق كاحليك وليس أمامهما.","yt":"2Nd5vP_q7MM","sh":1},"skater":{"n":"قفزة المتزلّج","en":"Skater Jump","tip":"اهبط على ساق مثنية قليلاً."},"quickfeet":{"n":"أقدام سريعة","en":"Quick Feet","tip":"خطوات صغيرة جداً وسريعة.","yt":"B0KL03-sBIs","sh":1},"shuffle":{"n":"الانزلاق الجانبي","en":"Side Shuffle","tip":"ابقَ منخفضاً ولا تقفز عالياً."},"rope":{"n":"نطّ الحبل","en":"Jump Rope","tip":"قفزات منخفضة، والمعصمان يحرّكان الحبل لا الذراعان.","yt":"VrYsx2OJN-E","sh":1},"ropefake":{"n":"نطّ الحبل الوهمي","en":"Jump Rope (no rope)","tip":"قفزات منخفضة على أطراف الأصابع.","yt":"InfxKw49q5I","sh":1},"sprint":{"n":"عدو سريع في المكان","en":"Sprint in Place","tip":"حرّك ذراعيك بقوة، فهي تزيد سرعتك.","yt":"jXiWeOsA1Hg","sh":0},"react":{"n":"ردّ الفعل","en":"Reaction Drill","tip":"كن جاهزاً على أطراف أصابعك قبل الإشارة.","yt":"ik12z_JsG3M","sh":1},"stance":{"n":"الوقفة القتالية","en":"Fighting Stance","tip":"ذقنك للأسفل قليلاً ويداك تحميان وجهك.","yt":"j0ZhZ4pJIkQ","sh":1},"footwork":{"n":"حركة القدمين","en":"Footwork","tip":"لا تُقاطع قدميك ولا تجمعهما.","yt":"MO9Pmq19I2Y","sh":0},"strikes":{"n":"لكمات مستقيمة (جاب وكروس)","en":"Jab & Cross","tip":"أعد يدك فوراً لحماية وجهك بعد كل لكمة.","yt":"qHEPGsDvU1o","sh":0},"kick":{"n":"الركلة الأمامية","en":"Front Kick","tip":"ارفع ركبتك أولاً ثم افرد ساقك.","yt":"5Oqzeol18PQ","sh":0},"balance":{"n":"التوازن على ساق","en":"Single-Leg Balance","tip":"شدّ بطنك، وجرّب إغماض عينيك عندما يصبح سهلاً.","yt":"Iuwe1Akr7eo","sh":1},"ffold":{"n":"ثني الجذع للأمام","en":"Forward Fold","tip":"لا ترتدّ: إطالة هادئة فقط.","yt":"nBUdw2Ltxcw","sh":1},"quad":{"n":"إطالة الفخذ الأمامية","en":"Quad Stretch","tip":"إحساس بالشدّ بلا ألم.","yt":"LROVK8lD7FA","sh":1},"chest":{"n":"إطالة الصدر","en":"Chest Stretch","tip":"افتح كتفيك للخلف ولا تقوّس ظهرك كثيراً.","yt":"q4aFFnfWvtY","sh":0},"child":{"n":"وضعية الطفل","en":"Child’s Pose","tip":"أرخِ كتفيك وتنفّس ببطء.","yt":"rspzY-wQEaU","sh":0},"breathe":{"n":"تنفّس عميق","en":"Deep Breathing","tip":"الشهيق من الأنف والزفير من الفم ببطء.","yt":"bLUdPWR4lPs","sh":1},"pullup":{"n":"العقلة","en":"Pull-up","tip":"لا تتأرجح: اسحب بعضلات ظهرك.","yt":"5j2XeUzsc8g","sh":0},"negpull":{"n":"العقلة السلبية (النزول البطيء)","en":"Negative Pull-up","tip":"كلما كان النزول أبطأ كان أفضل.","yt":"w5rZTCXYeKA","sh":1},"deadhang":{"n":"التعلّق الثابت","en":"Dead Hang","tip":"إذا تعبت يداك انزل بهدوء ولا تقفز.","yt":"VxYa_fikk4M","sh":1},"chinhold":{"n":"الثبات فوق العقلة","en":"Chin-over-Bar Hold","tip":"لا تحبس نفَسك.","yt":"FgtmrKzLils","sh":1},"diamond":{"n":"الضغط الماسي","en":"Diamond Push-up","tip":"إذا كان صعباً أدّه على الركبتين.","yt":"DLUmBX1gtYI","sh":1},"widepush":{"n":"الضغط الواسع","en":"Wide Push-up","tip":"لا تفتح يديك أكثر من اللازم حتى لا تتعب كتفيك.","yt":"XrjEhrB4OZ4","sh":1},"pushhold":{"n":"ثبات وضع الضغط","en":"High Plank Hold","tip":"كفّاك تحت كتفيك ونظرك للأرض.","yt":"DkHb8u___T8","sh":1},"pushlow":{"n":"الثبات في أسفل الضغط","en":"Low Push-up Hold","tip":"انزل ببطء مدة 3 ثوانٍ.","yt":"dr-CChbrdzE","sh":1},"kneehold":{"n":"ثبات الضغط على الركبتين","en":"Knee Plank Hold","tip":"ضع ركبتيك على سجادة لراحتهما.","yt":"yHSIkobbuus","sh":1},"pike":{"n":"ضغط البايك للكتف","en":"Pike Push-up","tip":"رأسك يتجه للأرض بين يديك لا أمامهما.","yt":"KLwmKYE04aQ","sh":1},"hollow":{"n":"ثبات الجسم المقعّر","en":"Hollow Body Hold","tip":"إذا ارتفع ظهرك عن الأرض اثنِ ركبتيك.","yt":"KNL9F8CBdJQ","sh":1},"palm":{"n":"ضربة كعب الكف","en":"Palm Heel Strike","tip":"أصابعك مثنية للخلف، وكعب الكف هو الذي يضرب.","yt":"xulLrwVUx_A","sh":1,"dub":1},"elbow":{"n":"ضربة الكوع","en":"Elbow Strike","tip":"يدك الأخرى تحمي وجهك.","yt":"VHuzjVVRd1o","sh":1},"block":{"n":"الصدّ والتغطية","en":"Block & Cover","tip":"لا تغمض عينيك.","yt":"hg0Jqli3r4Q","sh":0},"knee":{"n":"ضربة الركبة","en":"Knee Strike","tip":"الوركان يدفعان للأمام مع الركبة.","yt":"OxeG-GzjOt4","sh":1},"lowkick":{"n":"الركلة المنخفضة","en":"Low Kick","tip":"عد لوضع الحماية بسرعة بعد الركلة.","yt":"Ky9IyCMUlPw","sh":1,"dub":1},"shadow":{"n":"ملاكمة الظل","en":"Shadow Boxing","tip":"تنفّس مع كل ضربة.","yt":"VL_Ntk3ihoM","sh":0},"wristescape":{"n":"التحرر من مسكة المعصم","en":"Wrist Release","tip":"الحركة سريعة ومفاجئة.","yt":"HHNGMot4zWU","sh":1},"fall":{"n":"السقوط الآمن","en":"Breakfall","tip":"ذقنك على صدرك دائماً حتى لا يرتطم رأسك.","yt":"mONxdnLk53M","sh":0,"dub":1},"standup":{"n":"النهوض الفني","en":"Technical Stand-up","tip":"عيناك على الخصم طوال الحركة.","yt":"mrROlHWDBA0","sh":1,"dub":1}};
+const META={"jj":{"n":"قفز فتح وضم","en":"Jumping Jacks","tip":"اهبط على أطراف أصابعك بخفّة.","yt":"tyC3SodVpeA","sh":0},"armcircle":{"n":"دوائر الذراعين","en":"Arm Circles","tip":"ابدأ بدوائر صغيرة ثم كبّرها، ثم اعكس الاتجاه.","yt":"aJAhmgfjNLE","sh":1,"dub":1},"legswing":{"n":"أرجحة الساق","en":"Leg Swings","tip":"امسك الحائط بيدك لتتوازن، وجذعك ثابت.","yt":"MWJ36dnb0AM","sh":0,"dub":1},"sidebend":{"n":"ميل الجذع للجانب","en":"Side Bend","tip":"مِل للجانب فقط، لا للأمام.","yt":"gU0h9jrPG6I","sh":1,"dub":1},"highknees":{"n":"رفع الركبتين","en":"High Knees","tip":"ابقَ على أطراف أصابعك وظهرك مستقيم."},"buttkicks":{"n":"ركل الكعبين للخلف","en":"Butt Kicks","tip":"حرّك ذراعيك كأنك تركض."},"squat":{"n":"القرفصاء (سكوات)","en":"Squat","tip":"كعباك على الأرض طوال الوقت.","yt":"xkVSQSquj00","sh":1},"squatfast":{"n":"قرفصاء سريعة","en":"Fast Squats","tip":"السرعة لا تعني شكلاً خاطئاً: ظهرك مستقيم دائماً.","yt":"xkVSQSquj00","sh":1},"squatjump":{"n":"قرفصاء مع قفز","en":"Jump Squat","tip":"اهبط بهدوء وركبتاك مثنيتان، لا على ساقين مستقيمتين.","yt":"K4asFBkUMHM","sh":1},"lunge":{"n":"خطوة الطعن (لانجز)","en":"Lunge","tip":"ركبتك الأمامية فوق كاحلك، وجذعك مستقيم.","yt":"8RUd5qD8zYo","sh":1},"pushup":{"n":"الضغط الكامل","en":"Push-up","tip":"لا تدع وركيك يهبطان أو يرتفعان.","yt":"ZBIE7ewmIsk","sh":0},"wallpush":{"n":"الضغط على الحائط","en":"Wall Push-up","tip":"كلما ابتعدت قدماك عن الحائط صار التمرين أصعب.","yt":"ohlPk3Ye5z0","sh":1},"kneepushup":{"n":"الضغط على الركبتين","en":"Knee Push-up","tip":"لا تثنِ وركيك: جسمك خط مستقيم من الركبة للرأس.","yt":"yHSIkobbuus","sh":1},"plank":{"n":"البلانك (الثبات على الساعدين)","en":"Plank","tip":"لا ترفع مؤخرتك ولا تُنزل بطنك.","yt":"ibFthHEoxTs","sh":0},"mtn":{"n":"متسلّق الجبل","en":"Mountain Climber","tip":"يداك تحت كتفيك تماماً.","yt":"2J62zI7hhlA","sh":1},"glute":{"n":"جسر الوركين","en":"Glute Bridge","tip":"اضغط بكعبيك على الأرض، وشدّ أردافك في الأعلى."},"superman":{"n":"السوبرمان","en":"Superman","tip":"انظر إلى الأرض حتى تبقى رقبتك مستقيمة.","yt":"QZTWeojNZNA","sh":1},"deadbug":{"n":"الحشرة الميتة","en":"Dead Bug","tip":"أسفل ظهرك ملتصق بالأرض طوال الوقت.","yt":"ZXG8OHKER3k","sh":1,"dub":1},"wallsit":{"n":"الجلوس على الحائط","en":"Wall Sit","tip":"ركبتاك فوق كاحليك وليس أمامهما.","yt":"2Nd5vP_q7MM","sh":1},"skater":{"n":"قفزة المتزلّج","en":"Skater Jump","tip":"اهبط على ساق مثنية قليلاً."},"quickfeet":{"n":"أقدام سريعة","en":"Quick Feet","tip":"خطوات صغيرة جداً وسريعة.","yt":"B0KL03-sBIs","sh":1},"shuffle":{"n":"الانزلاق الجانبي","en":"Side Shuffle","tip":"ابقَ منخفضاً ولا تقفز عالياً."},"rope":{"n":"نطّ الحبل","en":"Jump Rope","tip":"قفزات منخفضة، والمعصمان يحرّكان الحبل لا الذراعان.","yt":"VrYsx2OJN-E","sh":1},"ropefake":{"n":"نطّ الحبل الوهمي","en":"Jump Rope (no rope)","tip":"قفزات منخفضة على أطراف الأصابع.","yt":"InfxKw49q5I","sh":1},"sprint":{"n":"عدو سريع في المكان","en":"Sprint in Place","tip":"حرّك ذراعيك بقوة، فهي تزيد سرعتك.","yt":"jXiWeOsA1Hg","sh":0},"react":{"n":"ردّ الفعل","en":"Reaction Drill","tip":"كن جاهزاً على أطراف أصابعك قبل الإشارة.","yt":"ik12z_JsG3M","sh":1},"stance":{"n":"الوقفة القتالية","en":"Fighting Stance","tip":"ذقنك للأسفل قليلاً ويداك تحميان وجهك.","yt":"j0ZhZ4pJIkQ","sh":1},"footwork":{"n":"حركة القدمين","en":"Footwork","tip":"لا تُقاطع قدميك ولا تجمعهما.","yt":"MO9Pmq19I2Y","sh":0},"strikes":{"n":"لكمات مستقيمة (جاب وكروس)","en":"Jab & Cross","tip":"أعد يدك فوراً لحماية وجهك بعد كل لكمة.","yt":"qHEPGsDvU1o","sh":0},"kick":{"n":"الركلة الأمامية","en":"Front Kick","tip":"ارفع ركبتك أولاً ثم افرد ساقك.","yt":"5Oqzeol18PQ","sh":0},"balance":{"n":"التوازن على ساق","en":"Single-Leg Balance","tip":"شدّ بطنك، وجرّب إغماض عينيك عندما يصبح سهلاً.","yt":"Iuwe1Akr7eo","sh":1},"ffold":{"n":"ثني الجذع للأمام","en":"Forward Fold","tip":"لا ترتدّ: إطالة هادئة فقط.","yt":"nBUdw2Ltxcw","sh":1},"quad":{"n":"إطالة الفخذ الأمامية","en":"Quad Stretch","tip":"إحساس بالشدّ بلا ألم.","yt":"LROVK8lD7FA","sh":1},"chest":{"n":"إطالة الصدر على الحائط","en":"Wall Chest Stretch","tip":"شدّ خفيف بلا ألم، وكتفك منخفض بعيداً عن أذنك.","yt":"q4aFFnfWvtY","sh":0},"child":{"n":"وضعية الطفل","en":"Child’s Pose","tip":"أرخِ كتفيك وتنفّس ببطء.","yt":"rspzY-wQEaU","sh":0},"breathe":{"n":"تنفّس عميق","en":"Deep Breathing","tip":"الشهيق من الأنف والزفير من الفم ببطء.","yt":"bLUdPWR4lPs","sh":1},"pullup":{"n":"العقلة","en":"Pull-up","tip":"لا تتأرجح: اسحب بعضلات ظهرك.","yt":"5j2XeUzsc8g","sh":0},"negpull":{"n":"العقلة السلبية (النزول البطيء)","en":"Negative Pull-up","tip":"كلما كان النزول أبطأ كان أفضل.","yt":"w5rZTCXYeKA","sh":1},"deadhang":{"n":"التعلّق الثابت","en":"Dead Hang","tip":"إذا تعبت يداك انزل بهدوء ولا تقفز.","yt":"VxYa_fikk4M","sh":1},"chinhold":{"n":"الثبات فوق العقلة","en":"Chin-over-Bar Hold","tip":"لا تحبس نفَسك.","yt":"FgtmrKzLils","sh":1},"diamond":{"n":"الضغط الماسي","en":"Diamond Push-up","tip":"إذا كان صعباً أدّه على الركبتين.","yt":"DLUmBX1gtYI","sh":1},"widepush":{"n":"الضغط الواسع","en":"Wide Push-up","tip":"لا تفتح يديك أكثر من اللازم حتى لا تتعب كتفيك.","yt":"XrjEhrB4OZ4","sh":1},"pushhold":{"n":"ثبات وضع الضغط","en":"High Plank Hold","tip":"كفّاك تحت كتفيك ونظرك للأرض.","yt":"DkHb8u___T8","sh":1},"pushlow":{"n":"الثبات في أسفل الضغط","en":"Low Push-up Hold","tip":"انزل ببطء مدة 3 ثوانٍ.","yt":"dr-CChbrdzE","sh":1},"kneehold":{"n":"ثبات الضغط على الركبتين","en":"Knee Plank Hold","tip":"ضع ركبتيك على سجادة لراحتهما.","yt":"yHSIkobbuus","sh":1},"pike":{"n":"ضغط البايك للكتف","en":"Pike Push-up","tip":"رأسك يتجه للأرض بين يديك لا أمامهما.","yt":"KLwmKYE04aQ","sh":1},"hollow":{"n":"ثبات الجسم المقعّر","en":"Hollow Body Hold","tip":"إذا ارتفع ظهرك عن الأرض اثنِ ركبتيك.","yt":"KNL9F8CBdJQ","sh":1},"palm":{"n":"ضربة كعب الكف","en":"Palm Heel Strike","tip":"أصابعك مثنية للخلف، وكعب الكف هو الذي يضرب.","yt":"xulLrwVUx_A","sh":1,"dub":1},"elbow":{"n":"ضربة الكوع","en":"Elbow Strike","tip":"يدك الأخرى تحمي وجهك.","yt":"VHuzjVVRd1o","sh":1},"block":{"n":"الصدّ والتغطية","en":"Block & Cover","tip":"لا تغمض عينيك.","yt":"hg0Jqli3r4Q","sh":0},"knee":{"n":"ضربة الركبة","en":"Knee Strike","tip":"الوركان يدفعان للأمام مع الركبة.","yt":"OxeG-GzjOt4","sh":1},"lowkick":{"n":"الركلة المنخفضة","en":"Low Kick","tip":"عد لوضع الحماية بسرعة بعد الركلة.","yt":"Ky9IyCMUlPw","sh":1,"dub":1},"shadow":{"n":"ملاكمة الظل","en":"Shadow Boxing","tip":"تنفّس مع كل ضربة.","yt":"VL_Ntk3ihoM","sh":0},"wristescape":{"n":"التحرر من مسكة المعصم","en":"Wrist Release","tip":"الحركة سريعة ومفاجئة.","yt":"HHNGMot4zWU","sh":1},"fall":{"n":"السقوط الآمن","en":"Breakfall","tip":"ذقنك على صدرك دائماً حتى لا يرتطم رأسك.","yt":"mONxdnLk53M","sh":0,"dub":1},"standup":{"n":"النهوض الفني","en":"Technical Stand-up","tip":"عيناك على الخصم طوال الحركة.","yt":"mrROlHWDBA0","sh":1,"dub":1}};
 for(const k in META)Object.assign(EX[k],META[k]);
 /* --- figure math --- */
 const rad=d=>d*Math.PI/180,V=(a,l)=>[Math.sin(rad(a))*l,Math.cos(rad(a))*l],add=(a,b)=>[a[0]+b[0],a[1]+b[1]];
@@ -688,9 +755,9 @@ function buildSession(key,week,cf,tired){
   function circuit(label,ids,rounds,work,rs,rr){const exs=ids.map(pickEx).filter(Boolean),r=tired?Math.max(1,rounds-1):rounds;
     for(let k=1;k<=r;k++)exs.forEach((id,i)=>{steps.push(W('main',id,{mode:'time',secs:tT(work),round:k,rounds:r,block:label}));rest(i<exs.length-1?rs:rr,i<exs.length-1?'':'راحة بين الجولات')});
     outline.push({label:label+' · '+cnt(r,['جولة','جولتان','جولات','جولة']),items:exs.map(id=>({ex:id,txt:cnt(tT(work),['ثانية','ثانيتان','ثوانٍ','ثانية'])}))})}
-  function cool(){[['ffold',30],['quad',20,'اليمنى'],['quad',20,'اليسرى'],['chest',25],['child',30],['breathe',30]].forEach(a=>{
+  function cool(){[['ffold',30],['quad',20,'اليمنى'],['quad',20,'اليسرى'],['chest',20,'اليمنى'],['chest',20,'اليسرى'],['child',30],['breathe',30]].forEach(a=>{
       steps.push(W('cool',a[0],{mode:'time',secs:a[1],side:a[2]||null,block:'تهدئة'}))});
-    outline.push({label:'تهدئة وتمدد',items:[['ffold','30 ثانية'],['quad','20 ثانية لكل ساق'],['chest','25 ثانية'],['child','30 ثانية'],['breathe','30 ثانية']].map(a=>({ex:a[0],txt:a[1]}))})}
+    outline.push({label:'تهدئة وتمدد',items:[['ffold','30 ثانية'],['quad','20 ثانية لكل ساق'],['chest','20 ثانية لكل ذراع'],['child','30 ثانية'],['breathe','30 ثانية']].map(a=>({ex:a[0],txt:a[1]}))})}
   const rin=lv==='b'?35:30,rout=lv==='b'?45:40;
   if(key==='A'){
     warm(['jj','armcircle','sidebend','legswing']);
@@ -836,6 +903,7 @@ function render(force){
   if(!force){const a=document.activeElement;if(a&&/^(TEXTAREA|INPUT)$/.test(a.tagName)&&$('#view').contains(a)){held=true;return}}
   held=false;
   const d=derive();
+  milestones(d);
   const v=$('#view');
   v.innerHTML=S.tab==='home'?viewHome(d):S.tab==='plan'?viewPlan(d):S.tab==='me'?viewMe(d):viewCoach(d);
   hydrate(v);
@@ -845,6 +913,57 @@ function render(force){
   sy.className='sync'+(Store.mode==='local'||(Store.mode==='cloud'&&!Store.synced)||Store.pending?' off':'');
   sy.innerHTML=Store.mode==='local'?'<i></i>على هذا الجهاز فقط':Store.pending?'<i></i>بانتظار الاتصال':Store.mode==='cloud'&&Store.synced?'<i></i>متصل':'<i></i>جارٍ الاتصال';
 }
+/* ---- milestones: belt gift + warrior stage ---- */
+const SEEN_K='darb_seen';let readyAt=0,celeOn=false;
+function seenGet(){try{return JSON.parse(localStorage.getItem(SEEN_K))}catch(e){return null}}
+function seenSet(o){try{localStorage.setItem(SEEN_K,JSON.stringify(o))}catch(e){}}
+function applyStage(w){if(applyStage.c===w)return;applyStage.c=w;const r=document.documentElement;if(w)r.dataset.stage='w';else delete r.dataset.stage;
+  const h=document.querySelector('.brand h1');if(h)h.textContent=w?'درب المحارب':'درب الأبطال';
+  const g=document.querySelector('.brand svg');if(g)g.outerHTML=w?SHIELD_SVG(46):BRAND_SVG;document.title=w?'درب المحارب':'درب الأبطال'}
+function milestones(d){
+  let seen=seenGet();
+  if(!Store.synced){applyStage(d.unlocked&&!!(seen&&seen.w));return}
+  if(!readyAt){readyAt=Date.now();setTimeout(schedule,1700)}
+  if(Date.now()-readyAt<1500){applyStage(d.unlocked&&!!(seen&&seen.w));return}
+  if(!seen){seen={b:d.belt.i,w:d.unlocked};seenSet(seen)}
+  if(d.belt.i<seen.b){seen.b=d.belt.i;seenSet(seen)}
+  if(!d.unlocked&&seen.w){seen.w=false;seenSet(seen)}
+  applyStage(d.unlocked&&seen.w);
+  if(celeOn||!$('#runner').hidden)return;
+  if(d.belt.i>seen.b){showGift(d.belt.i,false);return}
+  if(d.unlocked&&!seen.w)showWar(false);
+}
+function confettiHtml(n,cols,up){let c='';for(let i=0;i<n;i++)c+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;background:'+cols[i%cols.length]+';animation-delay:'+(Math.random()*2.5).toFixed(2)+'s;animation-duration:'+(2.2+Math.random()*2).toFixed(2)+'s'+(up?';top:auto;bottom:-12px;width:6px;height:6px;border-radius:50%':'')+'"></i>';return c}
+function chime(notes,gap){notes.forEach((f,i)=>setTimeout(()=>beep(f,180,.14),i*(gap||110)))}
+function showGift(bi,preview){
+  const b=BELTS[bi];celeOn=true;
+  const el=document.createElement('div');el.id='cele';el.dataset.bi=bi;el.dataset.pv=preview?'1':'';el.style.setProperty('--bc',b.c);
+  el.innerHTML='<div class="rays"></div><div class="flash"></div><div class="confetti" hidden>'+confettiHtml(90,['#FFD54A','#FF6B5E','#5AD1B5','#7C8CFF','#FFFFFF',b.c])+'</div>'+
+   '<div class="cin"><p class="c-eyebrow">'+(preview?'معاينة · ':'')+'هدية جديدة!</p><h2 class="c-title pre">اضغط على الهدية لتفتحها</h2>'+
+   '<div class="gstage"><button class="gift" data-act="cele-open" aria-label="افتح الهدية"><span class="lid"><span class="bow"><i></i><i></i></span></span><span class="box"></span></button>'+
+   '<div class="prize">'+beltSVG(b.c,230)+'</div></div>'+
+   '<div class="after"><h2 class="c-title">مبروك يا بطل!</h2><p class="c-belt">'+b.n+'</p><p class="c-rank">رتبتك الجديدة: <b>'+RANKS[bi]+'</b></p>'+(BELTS[bi+1]?'<p class="c-next">الحزام التالي: '+BELTS[bi+1].n+'</p>':'<p class="c-next">وصلت لأعلى حزام!</p>')+
+   '<button class="btn c-btn" data-act="cele-close">ارتدِ الحزام</button></div></div>';
+  document.body.appendChild(el);chime([523,659],140);
+}
+function openGift(){const el=$('#cele');if(!el||el.classList.contains('open')||el.classList.contains('opening'))return;
+  el.classList.add('opening');chime([392,440,494],90);try{navigator.vibrate&&navigator.vibrate([40,40,40])}catch(e){}
+  setTimeout(()=>{el.classList.remove('opening');el.classList.add('open');el.querySelector('.confetti').hidden=false;
+    chime([523,659,784,1046,1318],120);try{navigator.vibrate&&navigator.vibrate([80,60,160])}catch(e){}},650)}
+function showWar(preview){
+  celeOn=true;const el=document.createElement('div');el.id='cele';el.className='war';el.dataset.pv=preview?'1':'';el.dataset.w='1';
+  el.innerHTML='<div class="embers confetti">'+confettiHtml(60,['#FFB347','#FF6B3D','#FFD54A','#FF3B2F'],true)+'</div><div class="cin wrap">'+
+   '<p class="w1">'+(preview?'معاينة · ':'')+'أنهيت درب الأبطال...</p>'+
+   '<div class="wshield">'+SHIELD_SVG(150)+'</div><h2 class="wtitle">درب المحارب</h2>'+
+   '<p class="w2">المرحلة الثانية بدأت. تمارين الدفاع عن النفس صارت مفتوحة لك، وشكل الدرب تغيّر.</p>'+
+   '<button class="btn c-btn w3" data-act="cele-close">ادخل الدرب</button></div>';
+  document.body.appendChild(el);setTimeout(()=>{beep(98,420,.35);try{navigator.vibrate&&navigator.vibrate(200)}catch(e){}},1500);setTimeout(()=>chime([392,523,659,784],140),1900);
+}
+function closeCele(){const el=$('#cele');if(!el)return;const pv=el.dataset.pv==='1';
+  if(!pv){const s=seenGet()||{b:0,w:false};if(el.dataset.bi)s.b=Math.max(s.b,+el.dataset.bi);if(el.dataset.w)s.w=true;seenSet(s)}
+  el.classList.add('bye');setTimeout(()=>{el.remove();celeOn=false;render(true)},350)}
+const BRAND_SVG='<svg viewBox="0 0 120 56" aria-hidden="true"><path d="M60 26 L38 54 L50 56 L66 32Z" fill="#E9A21C" stroke="rgba(0,0,0,.25)"/><path d="M60 26 L82 54 L70 56 L56 32Z" fill="#E9A21C" stroke="rgba(0,0,0,.25)"/><rect x="2" y="18" width="116" height="14" rx="4" fill="#E9A21C" stroke="rgba(0,0,0,.25)"/><rect x="46" y="10" width="28" height="30" rx="7" fill="#F4B63F" stroke="rgba(0,0,0,.28)"/></svg>';
+const SHIELD_SVG=w=>'<svg viewBox="0 0 120 120" width="'+w+'" aria-hidden="true"><defs><linearGradient id="shg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E0402F"/><stop offset="1" stop-color="#7A140D"/></linearGradient><linearGradient id="sgg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE08A"/><stop offset="1" stop-color="#D99A1E"/></linearGradient></defs><path d="M60 6 L104 20 V56 C104 86 84 104 60 114 C36 104 16 86 16 56 V20 Z" fill="url(#shg)" stroke="url(#sgg)" stroke-width="6" stroke-linejoin="round"/><path d="M60 30 C71 45 80 55 76 72 C73 85 64 92 60 92 C50 92 42 82 44 70 C46 61 53 58 53 49 C60 54 63 61 63 66 C67 57 65 44 60 30 Z" fill="url(#sgg)"/></svg>';
 function schedule(){if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;render()})}
 Store.cb(schedule);
 document.addEventListener('focusout',()=>{if(held)setTimeout(()=>{const a=document.activeElement;if(!(a&&/^(TEXTAREA|INPUT)$/.test(a.tagName)))render()},60)});
@@ -877,6 +996,7 @@ function viewHome(d){
   const s=SESS[d.key],sess=buildSession(d.key,d.week,d.cf,S.tired),b=d.belt;
   let o='';
   if(Store.mode==='local')o+='<div class="note warn">التخزين المشترك غير متاح الآن، فتمارينك تُحفظ على هذا الجهاز فقط ولن تصل إلى أخيك.</div>';
+  if(document.documentElement.dataset.stage==='w')o+='<div class="stagebar">'+SHIELD_SVG(30)+'<span>المرحلة الثانية: <b>درب المحارب</b></span></div>';
   o+='<section class="hello blk"><p class="eyebrow">'+fmtDate(d.today)+'</p><h1>'+greet+' '+nm+'</h1><div class="chips" style="margin-top:10px"><span class="chip">'+ic('crown',16)+'رتبتك: '+RANKS[d.belt.i]+'</span><span class="chip">'+ic('flame',16)+'<b class="num">'+d.streak+'</b> سلسلة</span><span class="chip">'+ic('star',16)+'<b class="num">'+d.stars+'</b> نجمة</span></div></section>';
   o+='<div class="card belt" style="--bc:'+b.b.c+'">'+beltSVG(b.b.c,96)+'<div><h3>'+b.b.n+'</h3><div class="bar"><i style="width:'+Math.max(4,b.pct)+'%"></i></div><p class="small">'+(b.nx?'باقي '+cnt(b.toNext,F_EX)+' للوصول إلى '+b.nx.n:'وصلت إلى أعلى حزام. أنت بطل حقيقي!')+'</p></div></div>';
   d.unseen.slice(0,2).forEach(c=>{o+='<div class="msg"><div class="who">'+ic('msg',16)+'رسالة من أخيك المدرب</div><p>'+esc(c.text)+'</p><div class="acts"><button class="btn sm acc" data-act="cm-thanks" data-id="'+c.id+'">'+ic('heart',18)+'شكراً</button><button class="btn sm sec" data-act="cm-seen" data-id="'+c.id+'">حسناً</button></div></div>'});
@@ -950,9 +1070,9 @@ function viewMe(d){
 /* ---- coach ---- */
 function viewCoach(d){
   if(!coachOK())return pinScreen(d);
-  const subs=[['ov','نظرة عامة'],['log','السجل'],['set','الخطة والإعدادات'],['chk','الاختبارات']];
+  const subs=[['ov','نظرة عامة'],['prev','كل التمارين'],['log','السجل'],['set','الخطة والإعدادات'],['chk','الاختبارات']];
   let o='<section class="blk"><h1 style="font-size:32px">لوحة المدرب</h1></section><div class="chips-row" style="margin-top:12px">'+subs.map(s=>'<button class="pill" data-act="csub" data-v="'+s[0]+'" aria-pressed="'+(S.csub===s[0])+'">'+s[1]+'</button>').join('')+'</div>';
-  o+=S.csub==='ov'?coachOv(d):S.csub==='log'?coachLog(d):S.csub==='set'?coachSet(d):coachChk(d);
+  o+=S.csub==='prev'?coachPrev(d):S.csub==='ov'?coachOv(d):S.csub==='log'?coachLog(d):S.csub==='set'?coachSet(d):coachChk(d);
   o+='<button class="btn sec" style="margin-top:22px" data-act="coach-lock">'+ic('lock',22)+'قفل لوحة المدرب</button>';
   return o;
 }
@@ -998,6 +1118,25 @@ function coachOv(d){
   o+='<div class="sec-h"><h2>المهام اليومية</h2><small>نجوم: '+d.stars+'</small></div><div class="card"><div class="week">'+q7.map(x=>'<div class="day"><span>'+AR_D1[parseYmd(x.ds).getDay()]+'</span><div class="dot'+(x.n===3?' done':'')+' num">'+(x.n===3?ic('check',18):x.n)+'</div></div>').join('')+'</div></div>';
   o+='<div class="sec-h"><h2>درب المحارب</h2></div><div class="note">'+(d.unlocked?'مفتوح. أنجز '+cnt(d.wn,F_EX)+' من الدرب.':'مقفول. يفتح عند الحزام البرتقالي بعد اختبار اللياقة، أو افتحه يدوياً من الإعدادات.')+'</div>';
   o+='<div class="sec-h"><h2>رسالة تشجيع</h2></div><div class="field"><textarea id="cm-gen" placeholder="اكتب له كلمة طيبة..."></textarea><button class="btn sm" style="align-self:flex-start" data-act="cm-send" data-log="">'+ic('msg',20)+'إرسال</button></div>';
+  return o;
+}
+const EXG=[['تسخين وتهدئة',['jj','armcircle','legswing','sidebend','highknees','buttkicks','ffold','quad','chest','child','breathe']],
+ ['القوة',['squat','squatfast','lunge','glute','superman','deadbug','wallsit','plank','hollow']],
+ ['تدرّج الضغط',['wallpush','kneehold','kneepushup','pushhold','pushlow','pushup','widepush','diamond','pike']],
+ ['العقلة',['deadhang','negpull','chinhold','pullup']],
+ ['سرعة ورشاقة',['squatjump','mtn','skater','quickfeet','shuffle','rope','ropefake','sprint','react','balance']],
+ ['درب المحارب',['stance','footwork','strikes','kick','palm','elbow','block','knee','lowkick','shadow','wristescape','fall','standup']]];
+function coachPrev(d){
+  const lv=S.pvLv||d.cf.level||'beginner',w=S.pvW||1;
+  let o='<p class="muted" style="margin-top:14px;font-size:14px">شاهد أي جلسة في أي أسبوع وأي مستوى، حتى المقفولة. المعاينة لا تغيّر شيئاً عند أخيك.</p>';
+  o+='<div class="seg" style="margin-top:10px"><button data-act="pv-lv" data-v="beginner" aria-pressed="'+(lv==='beginner')+'">مبتدئ</button><button data-act="pv-lv" data-v="intermediate" aria-pressed="'+(lv==='intermediate')+'">متوسط</button></div>';
+  o+='<div class="seg" style="margin-top:8px">'+[1,2,3,4].map(x=>'<button data-act="pv-w" data-v="'+x+'" aria-pressed="'+(w===x)+'">الأسبوع '+x+'</button>').join('')+'</div>';
+  const cf=Object.assign({},d.cf,{level:lv});
+  o+='<div class="list" style="margin-top:12px">'+REG.concat(['W1','W2','W3','W4']).map(k=>{const s=SESS[k],ss=buildSession(k,w,cf,false);
+    return '<button class="row" data-act="peek" data-key="'+k+'" data-week="'+w+'" data-lv="'+lv+'" style="--tint:var('+s.c+')"><span class="chip tint">'+s.tag+'</span><div class="grow"><h4>'+s.name+'</h4><p class="sub">'+cnt(ss.mins,F_MIN)+' · '+cnt(new Set(ss.outline.flatMap(x=>x.items.map(i=>i.ex))).size,['تمرين واحد','تمرينان','تمارين','تمريناً'])+'</p></div></button>'}).join('')+'</div>';
+  o+='<div class="sec-h"><h2>مكتبة التمارين</h2><small>'+Object.keys(EX).length+' تمريناً</small></div>';
+  EXG.forEach(g=>{o+='<div class="osec">'+g[0]+'</div><div class="exgrid">'+g[1].filter(id=>EX[id]).map(id=>'<button class="exc" data-act="exinfo" data-ex="'+id+'"><div class="fig" data-ex="'+id+'" data-static data-pose="'+(EX[id].poses.length>1?1:0)+'"></div><b>'+EX[id].n+'</b>'+(EX[id].yt?'<small>'+ic('play',12)+'فيديو</small>':'')+'</button>').join('')+'</div>'});
+  o+='<div class="sec-h"><h2>المكافآت</h2></div><p class="muted" style="font-size:13.5px">شاهد ما يراه أخوك عند فتح حزام جديد أو عند دخوله درب المحارب.</p><div class="list"><button class="btn sec" data-act="pv-gift">'+ic('trophy',22)+'معاينة هدية الحزام</button><button class="btn sec" data-act="pv-war">'+ic('shield',22)+'معاينة دخول درب المحارب</button></div>';
   return o;
 }
 function coachLog(d){
@@ -1051,8 +1190,8 @@ function openSheet(title,body){
   hydrate($('#overlay'));
 }
 const closeSheet=()=>{$('#overlay').innerHTML='';if(R.vp){R.vp=false;if(R.paused){R.paused=false;R.endAt=Date.now()+R.left;const p=$('#pl');if(p)p.textContent='إيقاف'}}};
-function peek(key,week){
-  const d=derive(),sess=buildSession(key,+week,d.cf,false),s=SESS[key];
+function peek(key,week,lv){
+  const d=derive(),cf=lv?Object.assign({},d.cf,{level:lv}):d.cf,sess=buildSession(key,+week,cf,false),s=SESS[key];
   let o='<div class="chips"><span class="chip tint" style="--tint:var('+s.c+')">'+s.tag+'</span><span class="chip">الأسبوع '+week+'</span><span class="chip">'+cnt(sess.mins,F_MIN)+'</span></div><p class="muted">'+s.desc+'. اضغط على أي تمرين لتراه متحركاً.</p>';
   sess.outline.forEach(sec=>{o+='<div class="osec">'+sec.label+'</div><div class="list">'+sec.items.map(it=>'<button class="row" data-act="exinfo" data-ex="'+it.ex+'"><div class="thumb">'+figH(it.ex,true)+'</div><div class="grow"><h4 style="font-size:17px">'+EX[it.ex].n+'</h4><p class="sub">'+it.txt+'</p></div></button>').join('')+'</div>'});
   openSheet(s.name,o);
@@ -1248,7 +1387,13 @@ document.addEventListener('click',e=>{
       Store.put('quests',d.today,{date:d.today,d:rec,at:new Date().toISOString(),tz:(Intl.DateTimeFormat().resolvedOptions().timeZone)||''});
       if(rec.b&&rec.a&&rec.h)toast('نجمة جديدة! أكملت مهام اليوم');break}
     case 'set-combat':saveCfg({combatOpen:!cfg().combatOpen});break;
-    case 'peek':peek(a.dataset.key,a.dataset.week);break;
+    case 'peek':peek(a.dataset.key,a.dataset.week,a.dataset.lv);break;
+    case 'pv-lv':S.pvLv=v;render(true);break;
+    case 'pv-w':S.pvW=+v;render(true);break;
+    case 'pv-gift':{const d=derive();showGift(Math.max(1,d.belt.i),true);break}
+    case 'pv-war':showWar(true);break;
+    case 'cele-open':openGift();break;
+    case 'cele-close':closeCele();break;
     case 'exinfo':exinfo(a.dataset.ex);break;
     case 'vid-play':playVid(a.dataset.ex);break;
     case 'sheet-close':closeSheet();break;
