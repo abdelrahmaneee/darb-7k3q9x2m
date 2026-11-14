@@ -109,7 +109,7 @@ section.blk{margin-top:16px}
 .swc button[aria-pressed="true"]{box-shadow:0 0 0 3px var(--primary)}
 .tbl.rep td small{font-size:11px;margin-inline-start:4px}.tbl.rep small.up{color:var(--good)}.tbl.rep small.down{color:#E0533D}
 .prs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;text-align:center}.prs div{display:flex;flex-direction:column}.prs b{font-size:24px;color:var(--primary)}.prs span{font-size:11.5px;color:var(--ink-2);line-height:1.35}
-details.exd{margin:6px 0;font-size:13.5px}details.exd summary{cursor:pointer;color:var(--primary);font-weight:600}
+details.exd{margin:6px 0;font-size:13.5px}.qdays{display:flex;flex-direction:column;gap:6px}.qday{border-bottom:1px solid var(--line,rgba(127,127,127,.18));padding:6px 0 8px;font-size:14px}.qday:last-child{border-bottom:0}.qday summary{cursor:pointer;display:flex;gap:8px;align-items:baseline}.qday .qsum{margin-inline-start:auto;font-weight:600}.qday .exr{margin-top:6px}.qday>div.muted{text-align:start;margin-top:4px}details.exd summary{cursor:pointer;color:var(--primary);font-weight:600}
 .exl{display:grid;gap:3px;margin-top:6px}.exr{display:grid;grid-template-columns:22px 1fr;column-gap:4px;align-items:baseline}.exr .muted{grid-column:2;font-size:12px}.exr.sk b{color:var(--ink-2)}.exr b small{font-weight:400;color:var(--ink-2)}
 .figctl{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center;margin:8px 0 4px}
 .figctl .chip{border:0;cursor:pointer;font:inherit;font-size:13px;font-weight:600;min-height:34px}
@@ -1234,7 +1234,13 @@ function coachOv(d){
   o+='<div class="sec-h"><h2>الالتزام الأسبوعي</h2><small>آخر 8 أسابيع</small></div><div class="card">'+barChart(wks,d.per)+'</div>';
   o+='<div class="sec-h"><h2>تطوّر الجهد</h2><small>آخر '+eff.length+' تمارين</small></div><div class="card">'+(eff.length?lineChart(eff.slice().reverse().map(l=>l.effort),eff.slice().reverse().map(l=>fmtShort(l.date)),1,5,'تقييم الجهد'):'<p class="empty">لا توجد تقييمات بعد.</p>')+'</div>';
   const q7=[];for(let i=6;i>=0;i--){const ds=ymd(addDays(d.now,-i)),r=d.quests.find(x=>x.id===ds);q7.push({ds:ds,n:r&&r.d?['b','a','h'].filter(k=>r.d[k]).length:0})}
-  o+='<div class="sec-h"><h2>المهام اليومية</h2><small>نجوم: '+d.stars+'</small></div><div class="card"><div class="week">'+q7.map(x=>'<div class="day"><span>'+AR_D1[parseYmd(x.ds).getDay()]+'</span><div class="dot'+(x.n===3?' done':'')+' num">'+(x.n===3?ic('check',18):x.n)+'</div></div>').join('')+'</div></div>';
+  o+='<div class="sec-h"><h2>المهام اليومية</h2><small>نجوم: '+d.stars+'</small></div><div class="card"><div class="week">'+q7.map(x=>'<div class="day"><span>'+AR_D1[parseYmd(x.ds).getDay()]+'</span><div class="dot'+(x.n===3?' done':'')+' num">'+(x.n===3?ic('check',18):x.n)+'</div></div>').join('')+'</div></div>'
+  o+='<div class="sec-h"><h2>يومياته</h2><small>آخر 7 أيام: المهام التي علّم عليها وتمارينه</small></div><div class="card qdays">'+q7.slice().reverse().map((x,i)=>{const r=d.quests.find(y=>y.id===x.ds),rec=(r&&r.d)||{},qs=questsFor(x.ds,d.cf),lg=d.logs.filter(l=>l.date===x.ds);
+    const lbl=i===0?'اليوم':i===1?'أمس':fmtDate(x.ds),tm=r&&r.at&&x.n?fmtTime(r.at,r.tz):'';
+    return '<details class="qday"'+(i<2?' open':'')+'><summary><b>'+lbl+'</b>'+(i<2?' <small class="muted">'+fmtDate(x.ds)+'</small>':'')+'<span class="qsum">'+(x.n===3?'⭐ ':'')+x.n+'/3'+(lg.length?' · 🏋️':'')+'</span></summary>'+
+      qs.map(q=>'<div class="exr'+(rec[q.k]?'':' sk')+'"><span class="st">'+(rec[q.k]?'✅':'⬜')+'</span><b>'+esc(q.t)+'</b><span class="muted">'+q.tag+'</span></div>').join('')+
+      (tm?'<div class="muted" style="font-size:12.5px">آخر علامة الساعة '+tm+' بتوقيته</div>':'')+
+      (lg.length?lg.map(l=>'<div class="exr"><span class="st">🏋️</span><b>'+(SESS[l.sess]||SESS.A).name+'</b><span class="muted">أنجز '+(l.done||'-')+' من '+(l.total||'-')+' · '+cnt(l.mins||0,F_MIN)+(l.at?' · الساعة '+fmtTime(l.at,l.tz):'')+'</span></div>').join(''):'<div class="muted" style="font-size:12.5px">لا تمرين مسجّل في هذا اليوم.</div>')+'</details>'}).join('')+'</div>';
   o+='<div class="sec-h"><h2>درب المحارب</h2></div><div class="note">'+(d.unlocked?'مفتوح. أنجز '+cnt(d.wn,F_EX)+' من الدرب.':'مقفول. يفتح عند الحزام البرتقالي بعد اختبار اللياقة، أو افتحه يدوياً من الإعدادات.')+'</div>';
   o+='<div class="sec-h"><h2>رسالة تشجيع</h2></div><div class="field"><textarea id="cm-gen" placeholder="اكتب له كلمة طيبة..."></textarea><button class="btn sm" style="align-self:flex-start" data-act="cm-send" data-log="">'+ic('msg',20)+'إرسال</button></div>';
   return o;
@@ -1650,7 +1656,7 @@ async function familyGate(db){
   });
 }
 /* ============ new version banner ============ */
-const APP_VER='202611132359';
+const APP_VER='202611140822';
 async function checkVersion(){
   if(location.protocol==='file:'||APP_VER.indexOf('__')===0||!navigator.onLine)return;
   try{const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)return;const v=(await r.json()).v;
