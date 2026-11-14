@@ -296,7 +296,7 @@ details.exd{margin:6px 0;font-size:13.5px}details.exd summary{cursor:pointer;col
 @keyframes up{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
 .sheet-h{display:flex;align-items:center;justify-content:space-between;padding:16px 18px 8px}
 .sheet-h h3{font-size:24px}
-.sheet-b{padding:6px 18px 22px;overflow:auto;display:flex;flex-direction:column;gap:12px}
+.sheet-b{padding:6px 18px 22px;overflow:auto;display:flex;flex-direction:column;gap:12px}.sheet-b>*{flex-shrink:0}
 .icbtn{width:44px;height:44px;border-radius:50%;border:0;background:var(--surface-2);display:grid;place-items:center;cursor:pointer;flex:none}
 .sheet .stage{border-radius:22px;overflow:hidden}
 .osec{font-family:var(--display);font-size:19px;margin:6px 2px 0}
@@ -1650,7 +1650,7 @@ async function familyGate(db){
   });
 }
 /* ============ new version banner ============ */
-const APP_VER='202611132356';
+const APP_VER='202611132359';
 async function checkVersion(){
   if(location.protocol==='file:'||APP_VER.indexOf('__')===0||!navigator.onLine)return;
   try{const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)return;const v=(await r.json()).v;
