@@ -1664,7 +1664,7 @@ async function checkVersion(){
 }
 async function appUpdate(){const b=$('#upd');if(b)b.querySelector('button').textContent='جارٍ التحديث...';
   try{const rs=await navigator.serviceWorker.getRegistrations();await Promise.all(rs.map(r=>r.update().catch(()=>{})))}catch(e){}
-  try{const ks=await caches.keys();await Promise.all(ks.map(k=>caches.delete(k)))}catch(e){}
+  try{const ks=await caches.keys();await Promise.all(ks.filter(k=>k.indexOf('darb-')===0).map(k=>caches.delete(k)))}catch(e){}
   location.reload()}
 setTimeout(checkVersion,4000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)checkVersion()});
 /* ============ boot ============ */
