@@ -1691,7 +1691,7 @@ async function familyGate(db){
   });
 }
 /* ============ new version banner ============ */
-const APP_VER='__APP_VER__';
+const APP_VER='202611210818';
 async function checkVersion(){
   if(location.protocol==='file:'||APP_VER.indexOf('__')===0||!navigator.onLine)return;
   try{const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)return;const v=(await r.json()).v;
@@ -1712,6 +1712,7 @@ render(true);
     while(!window.__darbDB&&Date.now()-t0<12000)await new Promise(r=>setTimeout(r,100));
     db=window.__darbDB?await window.__darbDB:null;
   }catch(e){db=null}
+  try{await familyGate(db)}catch(e){}
   Store.attach(db);
 })();
 if('serviceWorker' in navigator&&location.protocol!=='file:')window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})});
