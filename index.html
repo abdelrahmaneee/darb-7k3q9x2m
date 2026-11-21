@@ -109,7 +109,7 @@ section.blk{margin-top:16px}
 .swc button[aria-pressed="true"]{box-shadow:0 0 0 3px var(--primary)}
 .tbl.rep td small{font-size:11px;margin-inline-start:4px}.tbl.rep small.up{color:var(--good)}.tbl.rep small.down{color:#E0533D}
 .prs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;text-align:center}.prs div{display:flex;flex-direction:column}.prs b{font-size:24px;color:var(--primary)}.prs span{font-size:11.5px;color:var(--ink-2);line-height:1.35}
-details.exd{margin:6px 0;font-size:13.5px}.qdays{display:flex;flex-direction:column;gap:6px}.qday{border-bottom:1px solid var(--line,rgba(127,127,127,.18));padding:6px 0 8px;font-size:14px}.qday:last-child{border-bottom:0}.qday summary{cursor:pointer;display:flex;gap:8px;align-items:baseline}.qday .qsum{margin-inline-start:auto;font-weight:600}.qday .exr{margin-top:6px}.qday>div.muted{text-align:start;margin-top:4px}details.exd summary{cursor:pointer;color:var(--primary);font-weight:600}
+details.exd{margin:6px 0;font-size:13.5px}.penw{display:flex;gap:8px;align-items:center}.penrule h3{display:flex;gap:6px;align-items:center;margin:0 0 6px;font-size:16px}.penrule p{margin:0 0 10px;font-size:14px;line-height:1.7}.pencard p{margin:4px 0}.exform{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}.exform label{display:flex;gap:6px;align-items:center;font-size:13.5px}.exform input{font:inherit;padding:6px 8px;border-radius:10px;border:1px solid var(--line,rgba(127,127,127,.3));background:transparent;color:inherit}.exform input[type=text]{flex:1;min-width:140px}.qdays{display:flex;flex-direction:column;gap:6px}.qday{border-bottom:1px solid var(--line,rgba(127,127,127,.18));padding:6px 0 8px;font-size:14px}.qday:last-child{border-bottom:0}.qday summary{cursor:pointer;display:flex;gap:8px;align-items:baseline}.qday .qsum{margin-inline-start:auto;font-weight:600}.qday .exr{margin-top:6px}.qday>div.muted{text-align:start;margin-top:4px}details.exd summary{cursor:pointer;color:var(--primary);font-weight:600}
 .exl{display:grid;gap:3px;margin-top:6px}.exr{display:grid;grid-template-columns:22px 1fr;column-gap:4px;align-items:baseline}.exr .muted{grid-column:2;font-size:12px}.exr.sk b{color:var(--ink-2)}.exr b small{font-weight:400;color:var(--ink-2)}
 .figctl{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-items:center;margin:8px 0 4px}
 .figctl .chip{border:0;cursor:pointer;font:inherit;font-size:13px;font-weight:600;min-height:34px}
@@ -770,6 +770,25 @@ const SESS={
 const REG=['A','B','C','D'];
 const RANKS=['مبتدئ شجاع','فهد صغير','نمر سريع','صقر الدرب','ذئب قوي','أسد الدرب','أسطورة الدرب','بطل ذهبي','محارب النخبة','حارس الدرب','سيد الدرب'];
 const isW=l=>/^W\d$/.test(l.sess);
+/* ---- penalty for breaks: from PEN_FROM, idle days beyond the allowed rest (ceil(7/perWeek)) cost 1 point per 2 days; coach excuses skip days ---- */
+const PEN_FROM='2026-11-22';
+function penaltyOf(logs,cf,today){
+  const free=Math.ceil(7/(cf.perWeek||4)),exs=Array.isArray(cf.excuses)?cf.excuses:[];
+  const isEx=ds=>exs.some(e=>e&&ds>=e.from&&ds<=e.to);
+  const plus=(ds,n)=>{const t=parseYmd(ds);t.setDate(t.getDate()+n);return ymd(t)};
+  const seg=(a,b,live)=>{let idle=0,c=0;const n=daysBetween(a,b)-1;
+    for(let k=1;k<=n;k++){const ds=plus(a,k);if(isEx(ds))continue;idle++;if(idle>free&&ds>=PEN_FROM)c++}
+    return {from:plus(a,1),to:plus(b,-1),days:n,idle,c,p:Math.floor(c/2),live}};
+  const dates=[...new Set(logs.map(l=>l.date))].sort(),segs=[];
+  for(let i=1;i<dates.length;i++)segs.push(seg(dates[i-1],dates[i],false));
+  let live=null,warn=0;
+  if(dates.length&&dates[dates.length-1]<today){live=seg(dates[dates.length-1],today,true);segs.push(live);
+    const tIdle=live.idle+(isEx(today)?0:1),tC=live.c+(!isEx(today)&&tIdle>free&&today>=PEN_FROM?1:0);
+    warn=tC>live.c&&tC%2===0?2:(!isEx(today)&&tIdle>=free&&today>=plus(PEN_FROM,-1))?1:0}
+  const bad=segs.filter(x=>x.p>0);
+  return {total:bad.reduce((a,x)=>a+x.p,0),segs:bad,live,warn,free,exs,
+    recent:bad.filter(x=>!x.live&&daysBetween(x.to,today)<=7).pop()||null}
+}
 const QB=[
  {t:'اضغط 10 ضغطات بشكل صحيح (على الركبتين إن احتجت).'},{t:'20 قرفصاء بطيئة وظهرك مستقيم.'},{t:'ثبات البلانك: حاول أن تزيد 5 ثوانٍ عن آخر مرة.'},
  {t:'قف على ساق واحدة 30 ثانية لكل ساق وعيناك على نقطة ثابتة.'},{t:'30 قفزة جاك بإيقاع ثابت.'},{t:'اجلس على الحائط 30 ثانية وركبتاك بزاوية قائمة.'},
@@ -962,7 +981,7 @@ function derive(){
   const prog=since0?regl.filter(l=>l.at>=since0):regl,wprog=since0?wl.filter(l=>l.at>=since0):wl;
   const n=prog.length,per=cf.perWeek,week=Math.floor(n/per)+1,key='ABCD'[n%4],wn=wprog.length,wkey='W'+(wn%4+1),wweek=Math.floor(wn/4)+1;
   const quests=Store.get('quests'),qToday=quests.find(q=>q.id===today)||null,fullQ=q=>q.d&&q.d.b&&q.d.a&&q.d.h;
-  const stars=quests.filter(fullQ).length,points=logs.length+Math.floor(stars/5);
+  const stars=quests.filter(fullQ).length,base=logs.length+Math.floor(stars/5),pen=penaltyOf(logs,cf,today),points=Math.max(0,base-pen.total);
   const wk=ymd(weekStart(now)),weekLogs=logs.filter(l=>weekKeyOf(l.date)===wk);
   const last=logs[logs.length-1]||null,since=last?daysBetween(last.date,today):null;
   let streak=0;
@@ -973,8 +992,8 @@ function derive(){
     else for(let i=logs.length-1;i>0;i--){if(okGap(daysBetween(logs[i-1].date,logs[i].date),logs[i].date))streak++;else break}}
   const ctx=badgeCtx(logs,chal,checks,per,quests),belt=beltFor(points);
   const needed=1+Math.floor(n/(4*per));
-  const unlocked=!!cf.combatOpen||(belt.i>=2&&checks.length>=1);
-  return {freeUsed,cf,now,today,logs,comments,checks,chal,n,per,week,key,wk,weekLogs,last,since,streak,belt,ctx,wn,wkey,wweek,quests,qToday,stars,points,unlocked,
+  const unlocked=!!cf.combatOpen||(beltFor(base).i>=2&&checks.length>=1);
+  return {freeUsed,cf,now,today,logs,comments,checks,chal,n,per,week,key,wk,weekLogs,last,since,streak,belt,ctx,wn,wkey,wweek,quests,qToday,stars,points,base,pen,unlocked,
     badges:BADGES.map(b=>Object.assign({},b,{got:b.t(ctx)})),doneToday:logs.filter(l=>l.date===today),
     checkDue:checks.length<needed||cf.checkReq,unseen:comments.filter(c=>!c.seen)};
 }
@@ -998,7 +1017,8 @@ function render(force){
   sy.innerHTML=Store.mode==='local'?'<i></i>على هذا الجهاز فقط':Store.pending?'<i></i>بانتظار الاتصال':Store.mode==='cloud'&&Store.synced?'<i></i>متصل':'<i></i>جارٍ الاتصال';
 }
 /* ---- milestones: belt gift + warrior stage ---- */
-const SEEN_K='darb_seen';let readyAt=0,celeOn=false;
+const SEEN_K='darb_seen';
+function penSeen(set){try{if(set)localStorage.setItem('darb_penrule','1');return localStorage.getItem('darb_penrule')==='1'}catch(e){return true}}let readyAt=0,celeOn=false;
 function seenGet(){try{return JSON.parse(localStorage.getItem(SEEN_K))}catch(e){return null}}
 function seenSet(o){try{localStorage.setItem(SEEN_K,JSON.stringify(o))}catch(e){}}
 function applyStage(w){if(applyStage.c===w)return;applyStage.c=w;const r=document.documentElement;if(w)r.dataset.stage='w';else delete r.dataset.stage;
@@ -1084,6 +1104,9 @@ function viewHome(d){
   if(document.documentElement.dataset.stage==='w')o+='<div class="stagebar">'+SHIELD_SVG(30)+'<span>المرحلة الثانية: <b>درب المحارب</b></span></div>';
   o+='<section class="hello blk"><p class="eyebrow">'+fmtDate(d.today)+'</p><h1>'+greet+' '+nm+'</h1><div class="chips" style="margin-top:10px"><span class="chip">'+ic('crown',16)+'رتبتك: '+RANKS[d.belt.i]+'</span><span class="chip">'+ic('flame',16)+'<b class="num">'+d.streak+'</b> سلسلة</span><span class="chip">'+ic('star',16)+'<b class="num">'+d.stars+'</b> نجمة</span></div></section>';
   o+='<div class="card belt" style="--bc:'+b.b.c+'">'+beltSVG(b.b.c,96,b.b.st)+'<div><h3>'+b.b.n+'</h3><div class="bar"><i style="width:'+Math.max(4,b.pct)+'%"></i></div><p class="small">'+(b.nx?'باقي '+cnt(b.toNext,F_EX)+' للوصول إلى '+b.nx.n:'وصلت إلى أعلى حزام. أنت بطل حقيقي!')+'</p></div></div>';
+  if(!d.doneToday.length&&d.pen.warn)o+='<div class="note warn penw">'+ic('flame',18)+(d.pen.warn===2?'<b>انتبه!</b> إذا لم تتمرّن اليوم ستخسر نقطة وقد تنزل رتبتك.':'<b>انتهت أيام راحتك.</b> تمرّن اليوم أو غداً حتى لا تبدأ بخسارة النقاط.')+'</div>';
+  else if(d.pen.recent)o+='<div class="note warn penw">'+ic('flame',18)+'خسرت <b class="num">'+d.pen.recent.p+'</b> '+(d.pen.recent.p===1?'نقطة':d.pen.recent.p===2?'نقطتين':'نقاط')+' بسبب انقطاعك '+cnt(d.pen.recent.days,F_DAY)+'. استمر لتستعيدها!</div>';
+  if(!penSeen())o+='<div class="card penrule"><h3>'+ic('flag',18)+' قانون جديد في الدرب</h3><p>البطل لا ينقطع! لك '+cnt(d.pen.free,F_DAY)+' راحة بين كل تمرين والذي يليه. بعدها كل يومين بلا تمرين = خسارة نقطة، وإذا نقصت نقاطك ترجع رتبتك وحزامك للخلف. إذا مرضت أو سافرت أخبر أخاك ليعفيك.</p><button class="btn sm" data-act="pen-ok">فهمت</button></div>';
   d.unseen.slice(0,2).forEach(c=>{o+='<div class="msg"><div class="who">'+ic('msg',16)+'رسالة من أخيك المدرب</div><p>'+esc(c.text)+'</p><div class="acts"><button class="btn sm acc" data-act="cm-thanks" data-id="'+c.id+'">'+ic('heart',18)+'شكراً</button><button class="btn sm sec" data-act="cm-seen" data-id="'+c.id+'">حسناً</button></div></div>'});
   if(d.doneToday.length){
     const l=d.doneToday[d.doneToday.length-1],nx=SESS[d.key];
@@ -1241,6 +1264,13 @@ function coachOv(d){
       qs.map(q=>'<div class="exr'+(rec[q.k]?'':' sk')+'"><span class="st">'+(rec[q.k]?'✅':'⬜')+'</span><b>'+esc(q.t)+'</b><span class="muted">'+q.tag+'</span></div>').join('')+
       (tm?'<div class="muted" style="font-size:12.5px">آخر علامة الساعة '+tm+' بتوقيته</div>':'')+
       (lg.length?lg.map(l=>'<div class="exr"><span class="st">🏋️</span><b>'+(SESS[l.sess]||SESS.A).name+'</b><span class="muted">أنجز '+(l.done||'-')+' من '+(l.total||'-')+' · '+cnt(l.mins||0,F_MIN)+(l.at?' · الساعة '+fmtTime(l.at,l.tz):'')+'</span></div>').join(''):'<div class="muted" style="font-size:12.5px">لا تمرين مسجّل في هذا اليوم.</div>')+'</details>'}).join('')+'</div>';
+  {const P=d.pen,ex=P.exs||[];
+  o+='<div class="sec-h"><h2>عقوبة الانقطاع</h2><small>تبدأ من '+fmtDate(PEN_FROM)+' · راحة مسموحة '+cnt(P.free,F_DAY)+' · ثم نقطة كل يومين</small></div><div class="card pencard">'+
+    '<p>النقاط: <b class="num">'+d.base+'</b> مكتسبة − <b class="num">'+P.total+'</b> عقوبة = <b class="num">'+d.points+'</b> · '+d.belt.b.n+'</p>'+
+    (P.segs.length?P.segs.map(x=>'<div class="exr"><span class="st">⛔</span><b>'+fmtDate(x.from)+' ← '+fmtDate(x.to)+'</b><span class="muted">'+cnt(x.days,F_DAY)+' بلا تمرين'+(x.live?' (مستمر)':'')+' · −'+x.p+'</span></div>').join(''):'<p class="muted">لا عقوبات حتى الآن.</p>')+
+    '<h4 style="margin:12px 0 6px">الأعذار (مرض، سفر...)</h4>'+
+    (ex.length?ex.map((e,i)=>'<div class="exr"><span class="st">🩹</span><b>'+fmtDate(e.from)+' ← '+fmtDate(e.to)+'</b><span class="muted">'+esc(e.why||'')+' <button class="link" data-act="ex-del" data-v="'+i+'">حذف</button></span></div>').join(''):'<p class="muted" style="font-size:13px">أيام العذر لا تُحسب انقطاعاً.</p>')+
+    '<div class="exform"><label>من <input type="date" id="ex-from" value="'+d.today+'"></label><label>إلى <input type="date" id="ex-to" value="'+d.today+'"></label><input type="text" id="ex-why" maxlength="40" placeholder="السبب (اختياري)"><button class="btn sm" data-act="ex-add">إضافة عذر</button></div></div>'}
   o+='<div class="sec-h"><h2>درب المحارب</h2></div><div class="note">'+(d.unlocked?'مفتوح. أنجز '+cnt(d.wn,F_EX)+' من الدرب.':'مقفول. يفتح عند الحزام البرتقالي بعد اختبار اللياقة، أو افتحه يدوياً من الإعدادات.')+'</div>';
   o+='<div class="sec-h"><h2>رسالة تشجيع</h2></div><div class="field"><textarea id="cm-gen" placeholder="اكتب له كلمة طيبة..."></textarea><button class="btn sm" style="align-self:flex-start" data-act="cm-send" data-log="">'+ic('msg',20)+'إرسال</button></div>';
   return o;
@@ -1575,6 +1605,11 @@ document.addEventListener('click',e=>{
       Store.put('quests',d.today,{date:d.today,d:rec,at:new Date().toISOString(),tz:(Intl.DateTimeFormat().resolvedOptions().timeZone)||''});
       if(rec.b&&rec.a&&rec.h)toast('نجمة جديدة! أكملت مهام اليوم');break}
     case 'set-combat':saveCfg({combatOpen:!cfg().combatOpen});break;
+    case 'pen-ok':penSeen(1);render(true);break;
+    case 'ex-add':{const f=($('#ex-from')||{}).value,t=($('#ex-to')||{}).value,w=(($('#ex-why')||{}).value||'').trim().slice(0,40);
+      if(!f||!t||t<f){toast('تأكد من التاريخين');break}
+      const ex=(cfg().excuses||[]).concat([{from:f,to:t,why:w}]);saveCfg({excuses:ex}).then(()=>{toast('تمت إضافة العذر');render(true)});break}
+    case 'ex-del':{const ex=(cfg().excuses||[]).slice();ex.splice(+v,1);saveCfg({excuses:ex}).then(()=>render(true));break}
     case 'peek':peek(a.dataset.key,a.dataset.week,a.dataset.lv);break;
     case 'pv-lv':S.pvLv=v;render(true);break;
     case 'pv-w':S.pvW=+v;render(true);break;
@@ -1656,7 +1691,7 @@ async function familyGate(db){
   });
 }
 /* ============ new version banner ============ */
-const APP_VER='202611140822';
+const APP_VER='__APP_VER__';
 async function checkVersion(){
   if(location.protocol==='file:'||APP_VER.indexOf('__')===0||!navigator.onLine)return;
   try{const r=await fetch('version.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)return;const v=(await r.json()).v;
@@ -1677,7 +1712,6 @@ render(true);
     while(!window.__darbDB&&Date.now()-t0<12000)await new Promise(r=>setTimeout(r,100));
     db=window.__darbDB?await window.__darbDB:null;
   }catch(e){db=null}
-  try{await familyGate(db)}catch(e){}
   Store.attach(db);
 })();
 if('serviceWorker' in navigator&&location.protocol!=='file:')window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})});
